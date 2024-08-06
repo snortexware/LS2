@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import * as React from "react";
-import { ColorPaletteProp } from "@mui/joy/styles";
+import React, { useState } from "react";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
@@ -10,7 +9,6 @@ import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import Link from "@mui/joy/Link";
 import Input from "@mui/joy/Input";
-import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalClose from "@mui/joy/ModalClose";
 import Select from "@mui/joy/Select";
@@ -27,17 +25,15 @@ import Dropdown from "@mui/joy/Dropdown";
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import BlockIcon from "@mui/icons-material/Block";
 import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { motion } from "framer-motion";
 import BasicModalDialog from "./modal";
-import { useState } from "react";
+import zIndex from "@mui/material/styles/zIndex";
 
 const rows = [
   {
@@ -60,10 +56,9 @@ const rows = [
       email: "steve.hamp@email.com",
     },
   }
-  
 ];
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -73,15 +68,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
+function getComparator(order, orderBy) {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -106,63 +93,51 @@ function RowMenu() {
     </Dropdown>
   );
 }
-export default function OrderTable() {
-  const [order, setOrder] = React.useState<Order>("desc");
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [open, setOpen] = React.useState(false);
-  const [modalVisivel, setModalVisivel] = useState(false);
-  const handleModalOpen = () => {
-    setModalVisivel(true);
-  };
 
-  const handleCancel = () => {
-    setModalVisivel(false);
-  };
-  const handleOk = () => {
-    setModalVisivel(false);
-  };
+export default function OrderTable() {
+  const [order, setOrder] = useState("desc");
+  const [selected, setSelected] = useState([]);
+  const [handleAbrir, setHandleAbrir] = useState(false);
+
+  const aberto = () => setHandleAbrir(true);
+  const fechado = () => setHandleAbrir(false);
+
   const renderFilters = () => (
     <React.Fragment>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
-          gap: 1,
-          alignItems: "flex-end",
-        }}
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
+        gap: 1,
+        alignItems: "flex-end",
+      }}
+    >
+      <Button
+        sx={{ width: "100%", height: "0%", marginTop: "23%" }}
+        size="sm"
+        color="primary"
       >
-        <Button
-          sx={{
-            width: "100%",
-            height: "0%",
-            marginTop: "23%",
-          }}
-          endDecorator={<KeyboardArrowRight />}
-          size="sm"
-          color="success"
-          onClick={handleModalOpen}
-        >
-          Cadastrar
-        </Button>
-        <BasicModalDialog
-          visible={modalVisivel}
-          onCancel={handleCancel}
-          onOk={handleOk}
-        />
-
-        <Button
-          sx={{ width: "100%", height: "0%", marginTop: "23%" }}
-          size="sm"
-          endDecorator={<KeyboardArrowRight />}
-          color="primary"
-        >
-          Filtrar
-        </Button>
-      </Box>
+        Filtrar
+      </Button>
+      <Button
+        sx={{ width: "100%", height: "0%", marginTop: "23%" }}
+        size="sm"
+        color="success"
+        endDecorator={<KeyboardArrowRightIcon />}
+        onClick={() => (handleAbrir ? fechado() : aberto())}
+      >
+        Cadastrar
+      </Button>
+      
+      
+    </Box>
     </React.Fragment>
   );
+
   return (
-    <React.Fragment>
+    <>
+    
+    <div>
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -177,24 +152,12 @@ export default function OrderTable() {
           size="sm"
           variant="outlined"
           color="neutral"
-          onClick={() => setOpen(true)}
-        ></IconButton>
-        <Modal open={open} onClose={() => setOpen(false)}>
-          <ModalDialog aria-labelledby="filter-modal" layout="fullscreen">
-            <ModalClose />
-            <Typography id="filter-modal" level="h2">
-              Filters
-            </Typography>
-            <Divider sx={{ my: 2 }} />
-            <Sheet sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {renderFilters()}
-              <Button color="primary" onClick={() => setOpen(false)}>
-                Submit
-              </Button>
-            </Sheet>
-          </ModalDialog>
-        </Modal>
+          onClick={() => setHandleAbrir(true)}
+        >
+          <FilterAltIcon />
+        </IconButton>
       </Sheet>
+      <>
       <Box
         className="SearchAndFilters-tabletUp"
         sx={{
@@ -228,27 +191,26 @@ export default function OrderTable() {
           flexShrink: 1,
           overflow: "auto",
           minHeight: 0,
+          zIndex: 0,
         }}
       >
-        <Table
+        <Table 
           aria-labelledby="tableTitle"
           stickyHeader
           hoverRow
           sx={{
-            "--TableCell-headBackground":
-              "var(--joy-palette-background-level1)",
+            "--TableCell-headBackground": "var(--joy-palette-background-level1)",
             "--Table-headerUnderlineThickness": "1px",
-            "--TableRow-hoverBackground":
-              "var(--joy-palette-background-level1)",
+            "--TableRow-hoverBackground": "var(--joy-palette-background-level1)",
             "--TableCell-paddingY": "4px",
             "--TableCell-paddingX": "8px",
+            position:"relative",
+            zIndex: 0,
           }}
         >
           <thead>
             <tr>
-              <th
-                style={{ width: 48, textAlign: "center", padding: "12px 6px" }}
-              >
+              <th style={{ width: 48, textAlign: "center", padding: "12px 6px" }}>
                 <Checkbox
                   size="sm"
                   indeterminate={
@@ -273,29 +235,34 @@ export default function OrderTable() {
                   underline="none"
                   color="primary"
                   component="button"
-                  onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
-                  endDecorator={<ArrowDropDownIcon />}
+                  onClick={() =>
+                    setOrder(order === "asc" ? "desc" : "asc")
+                  }
                   sx={[
                     {
-                      fontWeight: "lg",
+                      display: "flex",
+                      alignItems: "center",
                       "& svg": {
                         transition: "0.2s",
-                        transform:
-                          order === "desc" ? "rotate(0deg)" : "rotate(180deg)",
+                        transform: "rotate(0deg)",
                       },
                     },
                     order === "desc"
-                      ? { "& svg": { transform: "rotate(0deg)" } }
-                      : { "& svg": { transform: "rotate(180deg)" } },
+                      ? {
+                          "& svg": {
+                            transform: "rotate(180deg)",
+                          },
+                        }
+                      : { "& svg": { transform: "rotate(0deg)" } },
                   ]}
                 >
-                  Invoice
+                  N° Pedido
                 </Link>
               </th>
-              <th style={{ width: 140, padding: "12px 6px" }}>Date</th>
+              <th style={{ width: 120, padding: "12px 6px" }}>Date</th>
               <th style={{ width: 140, padding: "12px 6px" }}>Perido</th>
               <th style={{ width: 240, padding: "12px 6px" }}>Customer</th>
-              <th style={{ width: 140, padding: "12px 6px" }}> </th>
+              <th style={{ width: 140, padding: "12px 6px" }}></th>
             </tr>
           </thead>
           <tbody>
@@ -329,17 +296,10 @@ export default function OrderTable() {
                     size="sm"
                     startDecorator={
                       {
-                        Paid: <CheckRoundedIcon />,
-                        Refunded: <AutorenewRoundedIcon />,
-                        Cancelled: <BlockIcon />,
+                        "Dia Todo": <CheckRoundedIcon />,
+                        "Refunded": <AutorenewRoundedIcon />,
+                        "Cancelled": <BlockIcon />,
                       }[row.status]
-                    }
-                    color={
-                      {
-                        "Dia Todo": "success",
-                        Refunded: "neutral",
-                        Dia: "danger",
-                      }[row.status] as ColorPaletteProp
                     }
                   >
                     {row.status}
@@ -349,12 +309,8 @@ export default function OrderTable() {
                   <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                     <Avatar size="sm">{row.customer.initial}</Avatar>
                     <div>
-                      <Typography level="body-xs">
-                        {row.customer.name}
-                      </Typography>
-                      <Typography level="body-xs">
-                        {row.customer.email}
-                      </Typography>
+                      <Typography level="body-xs">{row.customer.name}</Typography>
+                      <Typography level="body-xs">{row.customer.email}</Typography>
                     </div>
                   </Box>
                 </td>
@@ -391,7 +347,6 @@ export default function OrderTable() {
         >
           Previous
         </Button>
-
         <Box sx={{ flex: 1 }} />
         {["1", "2", "3", "…", "8", "9", "10"].map((page) => (
           <IconButton
@@ -413,6 +368,11 @@ export default function OrderTable() {
           Next
         </Button>
       </Box>
-    </React.Fragment>
+      </>
+      </div>
+      {handleAbrir && (
+        <BasicModalDialog sx={{position: "absolute", zIndex: 1400}} handleAbrir={handleAbrir} handleClose={fechado} />
+      )}
+    </>
   );
 }
