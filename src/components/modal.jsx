@@ -1,7 +1,6 @@
 import {
   motion,
-  AnimatePresence as AnimationPresence,
-  Drag,
+  AnimatePresence
 } from "framer-motion";
 import Backdrop from "./backdrop";
 
@@ -21,39 +20,35 @@ import { FormControl, Button, Box, Typography, ModalClose } from "@mui/joy";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 
 import TextField from "@mui/joy/TextField";
-
+import Draggable from 'react-draggable';
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import { Dialog } from "@mui/material";
 import { DragHandleOutlined } from "@mui/icons-material";
 
 const BasicModalDialog = ({ handleClose, text }) => {
-  const DISTANCE = 100;
 
-  const TRANSITION_ENTER = {
-    duration: 0.64,
-    ease: [0.43, 0.13, 0.23, 0.96],
-  };
 
-  const TRANSITION_EXIT = {
-    duration: 0.48,
-    ease: [0.43, 0.13, 0.23, 0.96],
-  };
-
- 
-
-const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   return (
     <Backdrop onClick={handleClose}>
-      <AnimationPresence>
+      
         <motion.div
+        drag
+        dragConstraints={{
+          top: -200,
+          left: -150,
+          right: 300,
+          bottom: 200,
+        }}
           onClick={(e) => e.stopPropagation()}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
         >
-          <Stack spacing={2} sx={{ minWidth: 500 }}>
+         
+          <Stack spacing={3} sx={{ minWidth: 600 }}>
             <ModalDialog>
               <ModalClose onClick={handleClose} />
               <Typography endDecorator={<ScheduleIcon></ScheduleIcon>}>
@@ -61,14 +56,16 @@ const today = new Date().toISOString().split('T')[0];
               </Typography>
 
               <form>
-                <Stack spacing={4} sx={{ mt: 5 }}>
+                <Stack spacing={4} sx={{ mt: 2 }}>
                   <Stack direction="row" spacing={2} sx={{ height: 40 }}>
                     <FormLabel>Codigo BemTevi :</FormLabel>
                     <Input
-                      color="success"
-                      variant="solid"
+                    autoFocus
+                      required
+                     color="primary"
+                      variant="outlined"
                       type="number"
-                      placeholder="codigo"
+                      placeholder="Codigo"
                       sx={{
                         width: 80,
                         "& input::-webkit-inner-spin-button, & input::-webkit-outer-spin-button":
@@ -85,13 +82,17 @@ const today = new Date().toISOString().split('T')[0];
                   </Stack>
                   <FormControl>
                     <FormLabel>Nome</FormLabel>
-                    <Input size="sm" autoFocus required />
+                    <Input variant="outlined"
+                    placeholder="Digite o Nome"
+                       size="sm"  required />
                   </FormControl>
 
                   <Stack direction="row" spacing={2}>
                     <FormControl>
                       <FormLabel>Periodo</FormLabel>
                       <Select
+                     
+                        required
                         sx={{ minWidth: 170 }}
                         size="sm"
                         placeholder="Selecione o Periodo"
@@ -104,13 +105,18 @@ const today = new Date().toISOString().split('T')[0];
                     </FormControl>
                     <FormControl>
                       <FormLabel>Data</FormLabel>
-                      <Input sx={{ minWidth: 175 }} required type="date" slotProps={{
-          input: {
-            min: today,
-            max: '2100-12-31',
-            
-          },
-        }}></Input>
+                      <Input
+                      
+                        sx={{ minWidth: 175 }}
+                        required
+                        type="date"
+                        slotProps={{
+                          input: {
+                            min: today,
+                            max: "2100-12-31",
+                          },
+                        }}
+                      ></Input>
                     </FormControl>
                   </Stack>
 
@@ -118,6 +124,8 @@ const today = new Date().toISOString().split('T')[0];
                     <FormControl>
                       <FormLabel>Cidade</FormLabel>
                       <Select
+                      
+                        required
                         sx={{ mb: 3, minWidth: 170 }}
                         size="sm"
                         placeholder="Selecione o Periodo"
@@ -131,18 +139,34 @@ const today = new Date().toISOString().split('T')[0];
                     </FormControl>
                     <FormControl>
                       <FormLabel>Bairro</FormLabel>
-                      <Input size="sm" sx={{ minWidth: 160 }} required />
+                      <Input
+                      
+                      placeholder="Digite Bairro"
+                       size="sm" sx={{ minWidth: 160 }} required >
+                        </Input>
                     </FormControl>
                   </Stack>
                 </Stack>
+                <FormControl>
+                <FormLabel>Observação</FormLabel>
+                <Textarea
+                size="md"
+                
+        
+        placeholder="Comentario"
+       
+                      
+      />
+      </FormControl>
                 <Stack sx={{ mt: 3 }}>
                   <Button type="submit">Submit</Button>
                 </Stack>
               </form>
             </ModalDialog>
           </Stack>
+        
         </motion.div>
-      </AnimationPresence>
+      
     </Backdrop>
   );
 };

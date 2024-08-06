@@ -31,7 +31,7 @@ import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import BasicModalDialog from "./modal";
 import zIndex from "@mui/material/styles/zIndex";
 
@@ -137,7 +137,7 @@ export default function OrderTable() {
   return (
     <>
     
-    <div>
+   
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -171,7 +171,7 @@ export default function OrderTable() {
           },
         }}
       >
-        <FormControl sx={{ flex: "none", width: "20%" }} size="sm">
+        <FormControl sx={{ flex: "none", width: "30%" }} size="sm">
           <FormLabel>Procurar</FormLabel>
           <Input
             size="sm"
@@ -230,36 +230,8 @@ export default function OrderTable() {
                   sx={{ verticalAlign: "text-bottom" }}
                 />
               </th>
-              <th style={{ width: 120, padding: "12px 6px" }}>
-                <Link
-                  underline="none"
-                  color="primary"
-                  component="button"
-                  onClick={() =>
-                    setOrder(order === "asc" ? "desc" : "asc")
-                  }
-                  sx={[
-                    {
-                      display: "flex",
-                      alignItems: "center",
-                      "& svg": {
-                        transition: "0.2s",
-                        transform: "rotate(0deg)",
-                      },
-                    },
-                    order === "desc"
-                      ? {
-                          "& svg": {
-                            transform: "rotate(180deg)",
-                          },
-                        }
-                      : { "& svg": { transform: "rotate(0deg)" } },
-                  ]}
-                >
-                  N° Pedido
-                </Link>
-              </th>
-              <th style={{ width: 120, padding: "12px 6px" }}>Date</th>
+              <th style={{ width: 150, padding: "12px 6px" }}>Nome</th>
+              <th style={{ width: 100, padding: "12px 6px" }}>Date</th>
               <th style={{ width: 140, padding: "12px 6px" }}>Perido</th>
               <th style={{ width: 240, padding: "12px 6px" }}>Customer</th>
               <th style={{ width: 140, padding: "12px 6px" }}></th>
@@ -268,7 +240,7 @@ export default function OrderTable() {
           <tbody>
             {[...rows].sort(getComparator(order, "id")).map((row) => (
               <tr key={row.id}>
-                <td style={{ textAlign: "center", width: 120 }}>
+                <td style={{ gap: 3, textAlign: "center", width: 150 }}>
                   <Checkbox
                     size="sm"
                     checked={selected.includes(row.id)}
@@ -285,7 +257,7 @@ export default function OrderTable() {
                   />
                 </td>
                 <td>
-                  <Typography level="body-xs">{row.id}</Typography>
+                  <Typography size= "lg" level="title-sm">{row.customer.name}</Typography>
                 </td>
                 <td>
                   <Typography level="body-xs">{row.date}</Typography>
@@ -369,10 +341,15 @@ export default function OrderTable() {
         </Button>
       </Box>
       </>
-      </div>
+      <AnimatePresence 
+      initial={false}
+      mode='wait'
+      onExitComplete={()=> null}
+      >
       {handleAbrir && (
         <BasicModalDialog sx={{position: "absolute", zIndex: 1400}} handleAbrir={handleAbrir} handleClose={fechado} />
       )}
+      </AnimatePresence>
     </>
   );
 }
