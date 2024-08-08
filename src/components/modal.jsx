@@ -151,6 +151,7 @@ const BasicModalDialog = ({ handleClose, text }) => {
                 <FormLabel>Observação</FormLabel>
                 <Textarea
                 size="md"
+                required
                 
         
         placeholder="Comentario"

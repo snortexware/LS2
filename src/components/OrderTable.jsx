@@ -16,6 +16,7 @@ import Option from "@mui/joy/Option";
 import Table from "@mui/joy/Table";
 import Sheet from "@mui/joy/Sheet";
 import Checkbox from "@mui/joy/Checkbox";
+import { ColorPaletteProp } from "@mui/joy/styles";
 import IconButton, { iconButtonClasses } from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
 import Menu from "@mui/joy/Menu";
@@ -34,26 +35,73 @@ import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { motion, AnimatePresence } from "framer-motion";
 import BasicModalDialog from "./modal";
 import zIndex from "@mui/material/styles/zIndex";
-
+import Stack from "@mui/joy/Stack";
+import MenuOpen from "@mui/icons-material/MenuOpen";
 const rows = [
   {
     id: "INV-1234",
-    date: "Feb 3, 2023",
-    status: "Dia todo",
+    date: "20/08/2024",
+    periodo: "Dia todo",
     customer: {
       initial: "O",
-      name: "Olivia Ryhe",
-      email: "olivia@email.com",
+      name: "José cueca pinto da silva",
+      bairro: "Margem Esqueda",
+      codigo: "2300"
     },
   },
   {
     id: "INV-1233",
     date: "Feb 3, 2023",
-    status: "Dia Todo",
+    periodo: "Dia Todo",
     customer: {
       initial: "S",
       name: "Steve Hampton",
-      email: "steve.hamp@email.com",
+      bairro: "Coloninha",
+      codigo: "2300"
+    },
+  },
+  {
+    id: "INV-1233",
+    date: "Feb 3, 2023",
+    periodo: "Dia Todo",
+    customer: {
+      initial: "S",
+      name: "Steve Hampton",
+      bairro: "Coloninha",
+      codigo: "2300"
+    },
+  },
+  {
+    id: "INV-1233",
+    date: "Feb 3, 2023",
+    periodo: "Dia Todo",
+    customer: {
+      initial: "S",
+      name: "Steve Hampton",
+      bairro: "Coloninha",
+      codigo: "2300"
+    },
+  },
+  {
+    id: "INV-1233",
+    date: "Feb 3, 2023",
+    periodo: "Dia Todo",
+    customer: {
+      initial: "S",
+      name: "Steve Hampton",
+      bairro: "Coloninha",
+      codigo: "2300"
+    },
+  },
+  {
+    id: "INV-1233",
+    date: "Feb 3, 2023",
+    periodo: "Dia Todo",
+    customer: {
+      initial: "S",
+      name: "Steve Hampton",
+      bairro: "Coloninha",
+      codigo: "2300"
     },
   }
 ];
@@ -81,7 +129,7 @@ function RowMenu() {
         slots={{ root: IconButton }}
         slotProps={{ root: { variant: "plain", color: "neutral", size: "sm" } }}
       >
-        <MoreHorizRoundedIcon />
+        <MenuOpen />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
         <MenuItem>Editar</MenuItem>
@@ -94,6 +142,18 @@ function RowMenu() {
   );
 }
 
+const getColor = (status) => {
+  switch (status) {
+    case 'Manhã':
+      return 'success';
+    case '':
+      return 'neutral';
+    case 'Dia todo':
+      return 'danger';
+    default:
+      return 'default'; // Provide a default color if needed
+  }
+};
 export default function OrderTable() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
@@ -192,6 +252,7 @@ export default function OrderTable() {
           overflow: "auto",
           minHeight: 0,
           zIndex: 0,
+          
         }}
       >
         <Table 
@@ -202,60 +263,38 @@ export default function OrderTable() {
             "--TableCell-headBackground": "var(--joy-palette-background-level1)",
             "--Table-headerUnderlineThickness": "1px",
             "--TableRow-hoverBackground": "var(--joy-palette-background-level1)",
-            "--TableCell-paddingY": "4px",
-            "--TableCell-paddingX": "8px",
+            "--TableCell-paddingY": "8px",
+            "--TableCell-paddingX": "10px",
             position:"relative",
             zIndex: 0,
           }}
         >
           <thead>
-            <tr>
-              <th style={{ width: 48, textAlign: "center", padding: "12px 6px" }}>
-                <Checkbox
-                  size="sm"
-                  indeterminate={
-                    selected.length > 0 && selected.length !== rows.length
-                  }
-                  checked={selected.length === rows.length}
-                  onChange={(event) => {
-                    setSelected(
-                      event.target.checked ? rows.map((row) => row.id) : []
-                    );
-                  }}
-                  color={
-                    selected.length > 0 || selected.length === rows.length
-                      ? "primary"
-                      : undefined
-                  }
-                  sx={{ verticalAlign: "text-bottom" }}
-                />
-              </th>
-              <th style={{ width: 150, padding: "12px 6px" }}>Nome</th>
-              <th style={{ width: 100, padding: "12px 6px" }}>Date</th>
+         
+            <tr >
+            
+              <th style={{ width: 150, padding: "12px 25px", }}> Codigo Cliente</th>
+              <th style={{ width: 200, padding: "12px 6px" }}>Nome</th>
+              <th style={{ width: 110, padding: "12px 6px" }}>Data</th>
               <th style={{ width: 140, padding: "12px 6px" }}>Perido</th>
-              <th style={{ width: 240, padding: "12px 6px" }}>Customer</th>
-              <th style={{ width: 140, padding: "12px 6px" }}></th>
+              <th style={{ width: 140, padding: "12px 6px" }}>Cidade</th>
+              <th style={{ width: 110, padding: "12px 6px" }}>Bairro</th>
+              <th style={{ width: 150, padding: "12px 6px" }}>Comentario</th>
+             
+              
             </tr>
           </thead>
           <tbody>
             {[...rows].sort(getComparator(order, "id")).map((row) => (
               <tr key={row.id}>
-                <td style={{ gap: 3, textAlign: "center", width: 150 }}>
-                  <Checkbox
-                    size="sm"
-                    checked={selected.includes(row.id)}
-                    color={selected.includes(row.id) ? "primary" : undefined}
-                    onChange={(event) => {
-                      setSelected((ids) =>
-                        event.target.checked
-                          ? ids.concat(row.id)
-                          : ids.filter((itemId) => itemId !== row.id)
-                      );
-                    }}
-                    slotProps={{ checkbox: { sx: { textAlign: "left" } } }}
-                    sx={{ verticalAlign: "text-bottom" }}
-                  />
+                <td style={{ gap: 2, textAlign: "center", width: 130 }}>
+                <Typography
+  color="success"
+  level="title-md"
+  noWrap
+>{row.customer.codigo}</Typography>
                 </td>
+                
                 <td>
                   <Typography size= "lg" level="title-sm">{row.customer.name}</Typography>
                 </td>
@@ -264,36 +303,48 @@ export default function OrderTable() {
                 </td>
                 <td>
                   <Chip
-                    variant="soft"
-                    size="sm"
+                    variant="solid"
+                    size="md"
                     startDecorator={
                       {
-                        "Dia Todo": <CheckRoundedIcon />,
+                        "DiaTodo": <CheckRoundedIcon />,
                         "Refunded": <AutorenewRoundedIcon />,
                         "Cancelled": <BlockIcon />,
-                      }[row.status]
+                      }[row.periodo]
                     }
+                    color={getColor(row.periodo)}
                   >
-                    {row.status}
+                    {row.periodo}
                   </Chip>
                 </td>
                 <td>
-                  <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                    <Avatar size="sm">{row.customer.initial}</Avatar>
+                  <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
+                   
                     <div>
                       <Typography level="body-xs">{row.customer.name}</Typography>
-                      <Typography level="body-xs">{row.customer.email}</Typography>
                     </div>
                   </Box>
                 </td>
                 <td>
-                  <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                    <Link level="body-xs" component="button">
-                      Download
-                    </Link>
-                    <RowMenu />
+                  <Box sx={{ display: "flex", gap: 1, alignItems: "center",  borderRight: "solid px black"}}>
+                    
+                    <div>
+                      
+                      <Typography size="lg" level="body-xs">{row.customer.bairro}</Typography>
+                    </div>
                   </Box>
+                  
                 </td>
+                <td>
+                  <Stack direction={ "row"} spacing={2}>
+                  <Typography size="lg" level="body-xs">{row.customer.bairro}</Typography>
+                  
+                  <RowMenu />
+                  </Stack>
+                  
+                </td>
+               
+                
               </tr>
             ))}
           </tbody>

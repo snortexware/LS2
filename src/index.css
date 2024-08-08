@@ -27,3 +27,6 @@ code {
   justify-items: center;
   justify-content: center;
 }
+.test {
+  border-right: solid 1px black
+}

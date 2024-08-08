@@ -391,7 +391,7 @@ export default function OrderTable2() {
           <thead>
             <tr>
               <th
-                style={{ width: 48, textAlign: "center", padding: "12px 6px" }}
+                style={{ width: 8, textAlign: "center", padding: "12px 6px" }}
               >
                 <Checkbox
                   size="sm"
