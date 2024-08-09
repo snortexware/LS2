@@ -1,3 +1,4 @@
+// OrderTable.js
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import Avatar from "@mui/joy/Avatar";
@@ -37,75 +38,6 @@ import BasicModalDialog from "./modal";
 import zIndex from "@mui/material/styles/zIndex";
 import Stack from "@mui/joy/Stack";
 import MenuOpen from "@mui/icons-material/MenuOpen";
-const rows = [
-  {
-    id: "INV-1234",
-    date: "20/08/2024",
-    periodo: "Dia todo",
-    customer: {
-      initial: "O",
-      name: "José cueca pinto da silva",
-      bairro: "Margem Esqueda",
-      codigo: "2300"
-    },
-  },
-  {
-    id: "INV-1233",
-    date: "Feb 3, 2023",
-    periodo: "Dia Todo",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      bairro: "Coloninha",
-      codigo: "2300"
-    },
-  },
-  {
-    id: "INV-1233",
-    date: "Feb 3, 2023",
-    periodo: "Dia Todo",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      bairro: "Coloninha",
-      codigo: "2300"
-    },
-  },
-  {
-    id: "INV-1233",
-    date: "Feb 3, 2023",
-    periodo: "Dia Todo",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      bairro: "Coloninha",
-      codigo: "2300"
-    },
-  },
-  {
-    id: "INV-1233",
-    date: "Feb 3, 2023",
-    periodo: "Dia Todo",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      bairro: "Coloninha",
-      codigo: "2300"
-    },
-  },
-  {
-    id: "INV-1233",
-    date: "Feb 3, 2023",
-    periodo: "Dia Todo",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      bairro: "Coloninha",
-      codigo: "2300"
-    },
-  }
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -129,7 +61,7 @@ function RowMenu() {
         slots={{ root: IconButton }}
         slotProps={{ root: { variant: "plain", color: "neutral", size: "sm" } }}
       >
-        <MenuOpen />
+        <MoreHorizRoundedIcon />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
         <MenuItem>Editar</MenuItem>
@@ -146,58 +78,59 @@ const getColor = (status) => {
   switch (status) {
     case 'Manhã':
       return 'success';
-    case '':
-      return 'neutral';
-    case 'Dia todo':
+    case 'Dia Todo':
       return 'danger';
     default:
-      return 'default'; // Provide a default color if needed
+      return 'neutral';
   }
 };
+
 export default function OrderTable() {
+  const [rows, setRows] = useState([]);
+
   const [order, setOrder] = useState("desc");
-  const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
 
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
 
+  const handleSave = (novoPedido) => {
+    setRows([...rows, novoPedido]);
+    setHandleAbrir(false);
+  };
+
   const renderFilters = () => (
     <React.Fragment>
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
-        gap: 1,
-        alignItems: "flex-end",
-      }}
-    >
-      <Button
-        sx={{ width: "100%", height: "0%", marginTop: "23%" }}
-        size="sm"
-        color="primary"
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
+          gap: 1,
+          alignItems: "flex-end",
+        }}
       >
-        Filtrar
-      </Button>
-      <Button
-        sx={{ width: "100%", height: "0%", marginTop: "23%" }}
-        size="sm"
-        color="success"
-        endDecorator={<KeyboardArrowRightIcon />}
-        onClick={() => (handleAbrir ? fechado() : aberto())}
-      >
-        Cadastrar
-      </Button>
-      
-      
-    </Box>
+        <Button
+          sx={{ width: "100%" }}
+          size="sm"
+          color="primary"
+        >
+          Filtrar
+        </Button>
+        <Button
+          sx={{ width: "100%" }}
+          size="sm"
+          color="success"
+          endDecorator={<KeyboardArrowRightIcon />}
+          onClick={aberto}
+        >
+          Cadastrar
+        </Button>
+      </Box>
     </React.Fragment>
   );
 
   return (
     <>
-    
-   
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -212,12 +145,12 @@ export default function OrderTable() {
           size="sm"
           variant="outlined"
           color="neutral"
-          onClick={() => setHandleAbrir(true)}
+          onClick={aberto}
         >
           <FilterAltIcon />
         </IconButton>
       </Sheet>
-      <>
+      
       <Box
         className="SearchAndFilters-tabletUp"
         sx={{
@@ -241,6 +174,7 @@ export default function OrderTable() {
         </FormControl>
         {renderFilters()}
       </Box>
+
       <Sheet
         className="OrderTableContainer"
         variant="outlined"
@@ -252,7 +186,6 @@ export default function OrderTable() {
           overflow: "auto",
           minHeight: 0,
           zIndex: 0,
-          
         }}
       >
         <Table 
@@ -265,38 +198,31 @@ export default function OrderTable() {
             "--TableRow-hoverBackground": "var(--joy-palette-background-level1)",
             "--TableCell-paddingY": "8px",
             "--TableCell-paddingX": "10px",
-            position:"relative",
+            position: "relative",
             zIndex: 0,
           }}
         >
           <thead>
-         
-            <tr >
-            
-              <th style={{ width: 150, padding: "12px 25px", }}> Codigo Cliente</th>
+            <tr>
+              <th style={{ width: 150, padding: "12px 25px" }}>Código Cliente</th>
               <th style={{ width: 200, padding: "12px 6px" }}>Nome</th>
               <th style={{ width: 110, padding: "12px 6px" }}>Data</th>
-              <th style={{ width: 140, padding: "12px 6px" }}>Perido</th>
+              <th style={{ width: 140, padding: "12px 6px" }}>Período</th>
               <th style={{ width: 140, padding: "12px 6px" }}>Cidade</th>
               <th style={{ width: 110, padding: "12px 6px" }}>Bairro</th>
-              <th style={{ width: 150, padding: "12px 6px" }}>Comentario</th>
-             
-              
+              <th style={{ width: 150, padding: "12px 6px" }}>Comentário</th>
             </tr>
           </thead>
           <tbody>
             {[...rows].sort(getComparator(order, "id")).map((row) => (
               <tr key={row.id}>
-                <td style={{ gap: 2, textAlign: "center", width: 130 }}>
-                <Typography
-  color="success"
-  level="title-md"
-  noWrap
->{row.customer.codigo}</Typography>
+                <td style={{ textAlign: "center", width: 130 }}>
+                  <Typography color="success" level="title-md" noWrap>
+                    {row.customer.codigo}
+                  </Typography>
                 </td>
-                
                 <td>
-                  <Typography size= "lg" level="title-sm">{row.customer.name}</Typography>
+                  <Typography size="lg" level="title-sm">{row.customer.name}</Typography>
                 </td>
                 <td>
                   <Typography level="body-xs">{row.date}</Typography>
@@ -307,7 +233,7 @@ export default function OrderTable() {
                     size="md"
                     startDecorator={
                       {
-                        "DiaTodo": <CheckRoundedIcon />,
+                        "Dia todo": <CheckRoundedIcon />,
                         "Refunded": <AutorenewRoundedIcon />,
                         "Cancelled": <BlockIcon />,
                       }[row.periodo]
@@ -318,38 +244,23 @@ export default function OrderTable() {
                   </Chip>
                 </td>
                 <td>
-                  <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
-                   
-                    <div>
-                      <Typography level="body-xs">{row.customer.name}</Typography>
-                    </div>
-                  </Box>
+                  <Typography level="body-xs">{row.customer.cidade}</Typography>
                 </td>
                 <td>
-                  <Box sx={{ display: "flex", gap: 1, alignItems: "center",  borderRight: "solid px black"}}>
-                    
-                    <div>
-                      
-                      <Typography size="lg" level="body-xs">{row.customer.bairro}</Typography>
-                    </div>
-                  </Box>
-                  
-                </td>
-                <td>
-                  <Stack direction={ "row"} spacing={2}>
                   <Typography size="lg" level="body-xs">{row.customer.bairro}</Typography>
-                  
-                  <RowMenu />
-                  </Stack>
-                  
                 </td>
-               
-                
+                <td>
+                  <Stack direction="row" spacing={2}>
+                    <Typography size="lg" level="body-xs">{row.customer.comentario || "Nenhum"}</Typography>
+                    <RowMenu />
+                  </Stack>
+                </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Sheet>
+
       <Box
         className="Pagination-laptopUp"
         sx={{
@@ -391,15 +302,18 @@ export default function OrderTable() {
           Next
         </Button>
       </Box>
-      </>
+
       <AnimatePresence 
-      initial={false}
-      mode='wait'
-      onExitComplete={()=> null}
+        initial={false}
+        mode='wait'
+        onExitComplete={() => null}
       >
-      {handleAbrir && (
-        <BasicModalDialog sx={{position: "absolute", zIndex: 1400}} handleAbrir={handleAbrir} handleClose={fechado} />
-      )}
+        {handleAbrir && (
+          <BasicModalDialog 
+            handleClose={fechado} 
+            onSave={handleSave} 
+          />
+        )}
       </AnimatePresence>
     </>
   );

@@ -22,7 +22,7 @@ code {
   right: 0;
   height: 100%;
   width: 100%;
-  backdrop-filter: blur(0.5px);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-items: center;
   justify-content: center;
