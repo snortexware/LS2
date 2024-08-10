@@ -22,11 +22,30 @@ code {
   right: 0;
   height: 100%;
   width: 100%;
-  backdrop-filter: blur(0.5px);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-items: center;
   justify-content: center;
 }
 .test {
   border-right: solid 1px black
+}
+p {
+  font-size: 14px;
+  overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
+ 
+  
+}
+.teste {
+  display: block;/* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 4em;
+  line-height: 1.8em;
 }
