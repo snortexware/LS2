@@ -39,6 +39,7 @@ import { useColorScheme } from "@mui/joy/styles";
 import { useState } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
 
 function Toggler({
   defaultExpanded = false,
@@ -192,7 +193,44 @@ export default function Sidebar() {
             <Toggler
               renderToggle={({ open, setOpen }) => (
                 <ListItemButton onClick={() => setOpen(!open)}>
+                  <ContentPasteGoIcon sx={{ marginRight: 1 }} />
+
+                  <ListItemContent>
+                    <Typography level="title-sm">Contratos</Typography>
+                  </ListItemContent>
+                  <KeyboardArrowDownIcon
+                    sx={[
+                      open
+                        ? {
+                            transform: "rotate(180deg)",
+                          }
+                        : {
+                            transform: "none",
+                          },
+                    ]}
+                  />
+                </ListItemButton>
+              )}
+            >
+              <List sx={{ gap: 0.5 }}>
+              <ListItem>
+                  <ListItemButton>Mensal</ListItemButton>
+                </ListItem>
+
+                <ListItem>
+                  <ListItemButton>Semanal</ListItemButton>
+                </ListItem>
+                <ListItem></ListItem>
+              </List>
+            </Toggler>
+          </ListItem>
+          
+          <ListItem nested>
+            <Toggler
+              renderToggle={({ open, setOpen }) => (
+                <ListItemButton onClick={() => setOpen(!open)}>
                   <AssignmentRoundedIcon sx={{ marginRight: 1 }} />
+
                   <ListItemContent>
                     <Typography level="title-sm">Agendamento</Typography>
                   </ListItemContent>
@@ -218,10 +256,7 @@ export default function Sidebar() {
                 </ListItem>
 
                 <ListItem>
-                  <ListItemButton>Manutenção</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Alteração de Plano</ListItemButton>
+                  <ListItemButton component={RouterLink} to="/manutencao" >Manutenção</ListItemButton>
                 </ListItem>
                 <ListItem></ListItem>
               </List>

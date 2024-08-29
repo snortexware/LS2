@@ -17,9 +17,12 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import TextField from "@mui/joy/TextField";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
+import moment from 'moment';
+import { Rowing } from "@mui/icons-material";
 
-const BasicModalDialog = ({ handleClose, onSave }) => {
-
+const ModalInstalacao = ({ handleClose, onSave }) => {
+  
+  const [status, setStatus] = React.useState("Processando")
   const [pedido, setPedido] = React.useState({
     codigo: '',
     nome: '',
@@ -27,7 +30,14 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
     periodo: '',
     cidade: '',
     bairro: '',
-    comentario: ''
+    comentario: '',
+    id:'',
+    ponto: '',
+    servico: '',
+    tecnico: '',
+    auxiliar: '',
+    status: status,
+    
   });
   
   const handleChange = (e) => {
@@ -48,30 +58,18 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const novoPedido = {
-      id: `INV-${Math.floor(Math.random() * 10000)}`, // Gera um ID aleatório para o pedido
-      date: pedido.data,
-      periodo: pedido.periodo,
-      customer: {
-        codigo: pedido.codigo,
-        name: pedido.nome,
-        bairro: pedido.bairro,
-        cidade: pedido.cidade,
-        comentario: pedido.comentario,
-      },
-      
-    };
-    
-    onSave(novoPedido); // Passa os dados para o componente pai
+  
+ 
+    onSave(pedido); // Passa os dados para o componente pai
     handleClose(); // Fecha o modal
   };
   
+  const formattedDate = moment(pedido.data).format('DD/MM/YYYY');
   const today = new Date().toISOString().split("T")[0];
-  
+  console.log(pedido)
   return (
     <Backdrop onClick={handleClose}>
       <motion.div
-        drag
         dragConstraints={{
           top: -200,
           left: -150,
@@ -83,40 +81,36 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
+        
       >
-        <Stack spacing={3} sx={{ minWidth: 600 }}>
-          <ModalDialog>
+        <Stack spacing={2} sx={{  }} >
+          <ModalDialog   sx={{overflow: 'auto', maxWidth: '700px', p: 3, bgcolor: 'background.paper'  }}>
             <ModalClose onClick={handleClose} />
-            <Typography endDecorator={<ScheduleIcon />}>
-              Cadastrar SUPORTE
-            </Typography>
-
+           
             <form onSubmit={handleSubmit}>
-              <Stack spacing={4} sx={{ mt: 2 }}>
-                <Stack direction="row" spacing={2} sx={{ height: 40 }}>
-                  <FormLabel>Codigo BemTevi :</FormLabel>
-                  <Input
-                    autoFocus
-                    required
-                    color="primary"
-                    variant="outlined"
-                    type="number"
-                    placeholder="Codigo"
-                    name="codigo"
-                    value={pedido.codigo}
-                    onChange={handleChange}
-                    sx={{
-                      width: 80,
-                      "& input::-webkit-inner-spin-button, & input::-webkit-outer-spin-button": {
-                        WebkitAppearance: "none",
-                        margin: 0,
-                      },
-                      "& input[type='number']": {
-                        MozAppearance: "textfield",
-                        appearance: "textfield",
-                      },
-                    }}
-                  />
+           
+              <Stack spacing={4} sx={{ mt: 0 }}>
+              <Typography endDecorator={<ScheduleIcon />}>
+              Cadastrar INSTALAÇÃO
+            </Typography>
+                <Stack direction="row" spacing={2} >
+                <FormLabel>Segundo Ponto/Cabeamento:</FormLabel>
+                <FormControl>
+                    <Select
+                      required
+                      sx={{ minWidth: 110 }}
+                      size="sm"
+                      placeholder="Sim ou Não?"
+                      slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
+                      name="periodo"
+                      value={pedido.ponto}
+                      onChange={(e, value) => handleSelectChange("ponto", value)}
+                    >
+                      <Option value="Sim">Sim</Option>
+                      <Option value="Não">Não</Option>
+                      
+                    </Select>
+                  </FormControl>
                 </Stack>
 
                 <FormControl>
@@ -131,7 +125,26 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                     onChange={handleChange}
                   />
                 </FormControl>
-
+                <FormControl>
+                <FormLabel>Serviços</FormLabel>
+                    <Select
+                      required
+                      sx={{ minWidth: 110 }}
+                      size="sm"
+                      placeholder="Selecione o Serviço?"
+                      slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
+                      name="periodo"
+                      value={pedido.servico}
+                      onChange={(e, value) => handleSelectChange("servico", value)}
+                    >
+                      <Option value="Migração">Migração</Option>
+                      <Option value="Instalação Rádio">Instalação Rádio</Option>
+                      <Option value="Mudança de Endereço">Mudança de Endereço</Option>
+                      <Option value="Instalação Fibra">Instalação Fibra</Option>
+                      <Option value="Manutenção">Manutenção</Option>
+                      
+                    </Select>
+                  </FormControl>
                 <Stack direction="row" spacing={2}>
                   <FormControl>
                     <FormLabel>Periodo</FormLabel>
@@ -154,6 +167,7 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                     <FormLabel>Data</FormLabel>
                     <Input
                       sx={{ minWidth: 175 }}
+                      size="sm"
                       required
                       type="date"
                       name="data"
@@ -174,7 +188,7 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                     <FormLabel>Cidade</FormLabel>
                     <Select
                       required
-                      sx={{ mb: 3, minWidth: 170 }}
+                      sx={{  minWidth: 170 }}
                       size="sm"
                       placeholder="Selecione a Cidade"
                       slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
@@ -200,9 +214,53 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                       required
                     />
                   </FormControl>
+                  
+                </Stack>
+                <Stack direction="row" spacing={2}>
+                  <FormControl>
+                    <FormLabel>Técnico</FormLabel>
+                    <Select
+                      required
+                      sx={{  minWidth: 170 }}
+                      size="sm"
+                      placeholder="Selecione a Cidade"
+                      slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
+                      name="cidade"
+                      value={pedido.tecnico}
+                      onChange={(e, value) => handleSelectChange("tecnico", value)}
+                    >
+                      <Option value="Wagner">Wagner</Option>
+                      <Option value="Paulo">Paulo</Option>
+                      <Option value="Ilhota">Ilhota</Option>
+                      <Option value="Luiz Alves">Luiz Alves</Option>
+                    </Select>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Auxiliar</FormLabel>
+                    <Select
+                      required
+                      sx={{  minWidth: 170 }}
+                      size="sm"
+                      placeholder="Selecione a Cidade"
+                      slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
+                      name="cidade"
+                      value={pedido.auxiliar}
+                      onChange={(e, value) => handleSelectChange("auxiliar", value)}
+                    >
+                      <Option value="Lucas">Lucas</Option>
+                      <Option value="Francislano">Francislano</Option>
+                      <Option value="Ilhota">Ilhota</Option>
+                      <Option value="Luiz Alves">Luiz Alves</Option>
+                    </Select>
+                  </FormControl>
+                  
                 </Stack>
 
-                <FormControl>
+                <Stack direction={"row"} spacing={5}>
+                  
+                  </Stack>
+
+                <FormControl >
                   <FormLabel>Observação</FormLabel>
                   <Textarea
                     size="md"
@@ -214,7 +272,7 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                   />
                 </FormControl>
 
-                <Stack sx={{ mt: 3 }}>
+                <Stack>
                   <Button type="submit">Submit</Button>
                 </Stack>
               </Stack>
@@ -226,4 +284,4 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
   );
 };
 
-export default BasicModalDialog;
+export default ModalInstalacao;

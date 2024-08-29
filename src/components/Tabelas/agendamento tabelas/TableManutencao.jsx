@@ -33,7 +33,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { motion, AnimatePresence } from "framer-motion";
-import BasicModalDialog from "./modal";
+import BasicModalDialog from "../../modals/modal";
 import Stack from "@mui/joy/Stack";
 import MenuOpen from "@mui/icons-material/MenuOpen";
 
@@ -84,20 +84,21 @@ const getColor = (periodo) => {
   }
 };
 
-export default function OrderTable() {
+export default function TableManutencao() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
   const [rows, setRows] = useState([]);
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
-  const handleSave = (novoPedido) => {
-    setRows([...rows, novoPedido]);
+  const handleSave = (pedido) => {
+    setRows([...rows, pedido]);
     setHandleAbrir(false);
   };
 
   const renderFilters = () => (
     <React.Fragment>
+      
       <Box
         sx={{
           display: "grid",
@@ -128,6 +129,31 @@ export default function OrderTable() {
 
   return (
     <>
+    <Stack direction={"rows"} sx={{
+    justifyContent: "flex-start",
+    alignItems: "center",
+  }} columnGap={1} spacing={3}>
+
+    
+    <Typography level="h2" component="h1">
+              AGENDAMENTO | 
+              
+            </Typography>
+            <motion.div
+       
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{
+          opacity: 1,
+          x: 0,
+        }}
+        animate={{ opacity: 1, x: 0}}
+        exit={{ opacity: 0, x: 50 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+            <Typography level="h4" color="neutral" >MANUTENÇÃO</Typography>
+            </motion.div>
+            </Stack>
+            
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -290,12 +316,12 @@ export default function OrderTable() {
                 <tr key={row.id}>
                   <td style={{ textAlign: "center" }}>
                     <Typography color="success" level="title-md" noWrap>
-                      {row.customer.codigo}
+                      {row.codigo}
                     </Typography>
                   </td>
 
                   <td style={{ textAlign: "center" }}>
-                    <p>{row.customer.name}</p>
+                    <p>{row.name}</p>
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <p>{row.date}</p>
@@ -319,20 +345,20 @@ export default function OrderTable() {
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <div>
-                      <p>{row.customer.cidade}</p>
+                      <p>{row.cidade}</p>
                     </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
                                     
                       <div>
-                        <p>{row.customer.bairro}</p>
+                        <p>{row.bairro}</p>
                       </div>
                   
                   </td>
                   <td style={{ textAlign: "center" }}>
                     
                       <div>
-                        {row.customer.comentario}
+                        {row.comentario}
                       </div>
 
                       

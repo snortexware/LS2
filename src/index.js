@@ -9,11 +9,12 @@ import {
   BrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Typography from "@mui/joy/Typography";
 import Sidebar from "./components/Sidebar";
-import OrderTable from "./components/OrderTable";
-import OrderList from "./components/OrderList";
+import  TableManutencao  from "./components/Tabelas/agendamento tabelas/TableManutencao";
+import TableInstalacao from "./components/Tabelas/agendamento tabelas/TableInstalacao";
 import Header from "./components/Header";
-import OrderTable2 from "./components/OrderTable2";
+import SimpleChart from "./components/charts/chart";
 
 const router = createBrowserRouter([
   {
@@ -22,27 +23,29 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/inicio",
-        element: <OrderTable />,
+        element: <SimpleChart />,
+        
       },
       {
         path: "/instalacao",
-        element: <OrderTable2 />,
+        element: <TableInstalacao />,
+        
       },
       {
         path: "/manutencao",
-        element: <OrderTable />,
+        element: <TableManutencao />,
       },
       {
         path: "/alteracao_plano",
-        element: <OrderTable />,
+        element: <TableManutencao />,
       },
       {
         path: "/ordertable1",
-        element: <OrderTable />,
+        element: <TableManutencao />,
       },
       {
         path: "/ordertable1",
-        element: <OrderTable />,
+        element: <TableManutencao />,
       },
     ],
   },

@@ -12,15 +12,17 @@ import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
-import OrderTable from "./components/OrderTable";
-import OrderList from "./components/OrderList";
+import OrderTable from "./components/Tabelas/agendamento tabelas/TableManutencao";
 import Header from "./components/Header";
 import About from "./components/test";
 import { useNavigate } from "react-router-dom";
 import { InitColorSchemeScript } from "@mui/joy/styles";
 import minecraft from "./mine.png";
+import Meme from "./algo"
+import SecretSoundPlayer from "./algo";
 
 export default function App() {
+  
   return (
     <CssVarsProvider disableTransitionOnChange>
       <CssBaseline />
@@ -64,12 +66,11 @@ export default function App() {
               justifyContent: "space-between",
             }}
           >
-            <Typography level="h2" component="h1">
-              AGENDAMENTO
-            </Typography>
+            
+            
           </Box>
-
-          <OrderList />
+            <SecretSoundPlayer />
+          
           <Outlet />
         </Box>
       </Box>
