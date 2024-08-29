@@ -15,6 +15,7 @@ import  TableManutencao  from "./components/Tabelas/agendamento tabelas/TableMan
 import TableInstalacao from "./components/Tabelas/agendamento tabelas/TableInstalacao";
 import Header from "./components/Header";
 import SimpleChart from "./components/charts/chart";
+import Inicio from "./components/charts/inicio";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/inicio",
-        element: <SimpleChart />,
+        element: <Inicio />,
         
       },
       {

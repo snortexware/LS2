@@ -20,6 +20,7 @@ import { InitColorSchemeScript } from "@mui/joy/styles";
 import minecraft from "./mine.png";
 import Meme from "./algo"
 import SecretSoundPlayer from "./algo";
+import Inicio from "./components/charts/inicio";
 
 export default function App() {
   
@@ -70,7 +71,7 @@ export default function App() {
             
           </Box>
             <SecretSoundPlayer />
-          
+            <Inicio/>
           <Outlet />
         </Box>
       </Box>

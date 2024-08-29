@@ -40,6 +40,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
+import { duration } from "moment";
 
 function Toggler({
   defaultExpanded = false,
@@ -143,12 +144,13 @@ export default function Sidebar() {
       />
       <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
         <IconButton component={RouterLink} to="/inicio"> 
-          <motion.div
-          
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
+        <motion.div
+      
+      className="box"
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1, cx: [null, 100] }}
+      transition={{duration: 0.2}}
+    >
             <img src={logotema === 0 ? logoWH : logoBK} alt="Logo" />
           </motion.div>
         </IconButton>
