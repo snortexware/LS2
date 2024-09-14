@@ -1,48 +1,85 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import 'chartjs-adapter-date-fns'; // Import date adapter for time scales
 
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const SimpleChart = () => {
+const MultiAxisLineChart = () => {
   // Chart data
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['Junho', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
     datasets: [
       {
-        label: 'Monthly Sales',
+        label: 'Instalações',
         data: [65, 59, 80, 81, 56, 55, 40],
-        borderColor: 'rgba(75,192,192,1)',
-        backgroundColor: 'rgba(75,192,192,0.2)',
-        fill: true,
+        borderColor: 'green',
+        backgroundColor: 'green',
+        yAxisID: 'y1',
+      },
+      {
+        label: 'Cancelamentos',
+        data: [28, 48, 40, 19, 86, 27, 90],
+        borderColor: 'red',
+        backgroundColor: 'red',
+        yAxisID: 'y2',
       },
     ],
   };
 
   // Chart options
   const options = {
-    responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
+      title: {
+        display: true,
+        
       },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return `${context.dataset.label}: ${context.raw}`;
-          },
+      legend: {
+        display: true,
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Meses',
+        },
+      },
+      y1: {
+        type: 'linear',
+        position: 'left',
+        title: {
+          display: true,
+          
+        },
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+      y2: {
+        type: 'linear',
+        position: 'right',
+        title: {
+          display: true,
+          
+        },
+        grid: {
+          drawOnChartArea: false, // Only the primary y-axis grid lines are displayed
+        },
+        ticks: {
+          beginAtZero: true,
         },
       },
     },
   };
 
   return (
-    <div>
-      <h2>Chamados</h2>
-      <Line data={data} options={options} />
+    <div style={{minWidth: "500px", maxWidth: "500px"}}>
+     
+      <Line  data={data} options={options} />
     </div>
   );
 };
 
-export default SimpleChart;
+export default MultiAxisLineChart;

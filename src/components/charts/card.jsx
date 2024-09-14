@@ -7,137 +7,109 @@ import CircularProgress from '@mui/joy/CircularProgress';
 import Typography from '@mui/joy/Typography';
 import SvgIcon from '@mui/joy/SvgIcon';
 import { Stack } from '@mui/joy';
+import RouterIcon from '@mui/icons-material/Router';
+import BlockIcon from '@mui/icons-material/Block';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import SyncAltIcon from '@mui/icons-material/SyncAlt';
+import { motion } from "framer-motion"
+
 
 export default function CardInvertedColors() {
   return (
     <Stack direction={"row"} spacing={5}>
-    <Card variant="solid" color="primary" invertedColors sx={{width: 160}}>
+      
+    <Card variant="solid" color="success" invertedColors sx={{textAlign: 'center',
+        alignItems: 'center',
+        width: 343,
+        // to make the demo resizable
+        overflow: 'auto',
+        resize: 'horizontal',
+        '--icon-size': '100px',width: 170}}>
       <CardContent orientation="vertical">
-        <CircularProgress size="sm" determinate value={20}>
-          <SvgIcon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
-              />
-            </svg>
-          </SvgIcon>
-        </CircularProgress>
+   
         <CardContent>
-          <Typography level="body-md">Gross profit</Typography>
-          <Typography level="h2">$ 432.6M</Typography>
+       <Stack  alignItems="center" spacing={1}>  
+       <RouterIcon/>        
+        <Typography  level="body-lg">Instalações</Typography>
+          </Stack>
+          <Typography level="h2">432.6M</Typography>
         </CardContent>
       </CardContent>
     
     </Card>
-
-    <Card variant="solid" color="success" invertedColors sx={{width: 160}}>
-      <CardContent orientation="vertical">
-        <CircularProgress size="sm" determinate value={20}>
-          <SvgIcon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
-              />
-            </svg>
-          </SvgIcon>
-        </CircularProgress>
+  
+    <Card variant="solid" color="danger" invertedColors sx={{ textAlign: 'center',
+        alignItems: 'center',
+        width: 343,
+        // to make the demo resizable
+        overflow: 'auto',
+        resize: 'horizontal',
+        '--icon-size': '100px', width: 180}}>
+      <CardContent orientation="vertical" sx={{alignItems: 'center',justifyContent: "center"}}>
         <CardContent>
-          <Typography level="body-md">Gross profit</Typography>
-          <Typography level="h2">$ 432.6M</Typography>
+          <Stack  alignItems="center" spacing={1}>
+            <BlockIcon/>
+          <Typography level="body-md">Cancelamentos</Typography>
+          </Stack>
+          <Typography level="h2" sx={{ alignItems: 'center', justifyContent: "center"}}>50</Typography>
         </CardContent>
       </CardContent>
     
     </Card>
-    <Card variant="solid" color="primary" invertedColors sx={{width: 160}}>
+    
+    <Card variant="solid" color="primary" invertedColors sx={{textAlign: 'center',
+        alignItems: 'center',
+        width: 343,
+        // to make the demo resizable
+        overflow: 'auto',
+        resize: 'horizontal',
+        '--icon-size': '100px',width: 180}}>
       <CardContent orientation="vertical">
-        <CircularProgress size="sm" determinate value={20}>
-          <SvgIcon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
-              />
-            </svg>
-          </SvgIcon>
-        </CircularProgress>
+        
         <CardContent>
-          <Typography level="body-md">Gross profit</Typography>
-          <Typography level="h2">$ 432.6M</Typography>
+        <Stack  alignItems="center" spacing={1}>
+            <ConstructionIcon/>
+          <Typography level="body-lg">Manutenções</Typography>
+          </Stack>
+          <Typography level="h2">30</Typography>
         </CardContent>
       </CardContent>
     
     </Card>
-    <Card variant="solid" color="primary" invertedColors sx={{width: 160}}>
+    <Card variant="solid" color="primary" invertedColors sx={{textAlign: 'center',
+        alignItems: 'center',
+        
+        // to make the demo resizable
+        overflow: 'auto',
+        resize: 'horizontal',
+        '--icon-size': '100px',width: 180}}>
       <CardContent orientation="vertical">
-        <CircularProgress size="sm" determinate value={20}>
-          <SvgIcon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
-              />
-            </svg>
-          </SvgIcon>
-        </CircularProgress>
+        
         <CardContent>
-          <Typography level="body-md">Gross profit</Typography>
-          <Typography level="h2">$ 432.6M</Typography>
+        
+        <Stack  alignItems="center"spacing={1}>
+        <SyncAltIcon/>
+          <Typography level="body-md">Mudanças de Plano</Typography>
+          </Stack>
+          <Typography level="h2">10</Typography>
         </CardContent>
       </CardContent>
     
-    </Card> 
-    <Card variant="solid" color="primary" invertedColors sx={{minwidth: 160}}>
+    </Card>
+    <Card variant="solid" color="primary" invertedColors sx={{textAlign: 'center',
+        alignItems: 'center',
+        width: 343,
+        // to make the demo resizable
+        overflow: 'auto',
+        resize: 'horizontal',
+        '--icon-size': '100px',width: 180}}>
       <CardContent orientation="vertical">
-        <CircularProgress size="sm" determinate value={20}>
-          <SvgIcon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
-              />
-            </svg>
-          </SvgIcon>
-        </CircularProgress>
         <CardContent>
-          <Typography level="body-md">Gross profit</Typography>
-          <Typography level="h2">$ 432.6M</Typography>
+        <Stack  alignItems="center"spacing={1}>
+        <SyncAltIcon/>
+          <Typography level="body-md">Mudanças de Titularidade</Typography>
+          </Stack>
+          <Typography level="h2">10</Typography>
         </CardContent>
       </CardContent>
     

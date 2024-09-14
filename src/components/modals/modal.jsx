@@ -83,7 +83,7 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
         transition={{ duration: 0.2, ease: "easeInOut" }}
       >
         <Stack spacing={3} sx={{ minWidth: 600 }}>
-          <ModalDialog>
+          <ModalDialog sx={{overflow: 'auto', maxnWidth: '400px', p: 3, bgcolor: 'background.paper'  }}>
             <ModalClose onClick={handleClose} />
             <Typography endDecorator={<ScheduleIcon />}>
               Cadastrar SUPORTE

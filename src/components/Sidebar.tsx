@@ -146,10 +146,11 @@ export default function Sidebar() {
         <IconButton component={RouterLink} to="/inicio"> 
         <motion.div
       
-      className="box"
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1, cx: [null, 100] }}
-      transition={{duration: 0.2}}
+      onClick={(e) => e.stopPropagation()}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        
+        transition={{ duration: 0.3, ease: "easeInOut" }}
     >
             <img src={logotema === 0 ? logoWH : logoBK} alt="Logo" />
           </motion.div>
@@ -290,18 +291,19 @@ export default function Sidebar() {
               <List sx={{ gap: 0.5 }}>
                 <ListItem sx={{ mt: 0.5 }}>
                   <ListItemButton
+                   
                     role="menuitem"
-                    component="a"
-                    href="/joy-ui/getting-started/templates/profile-dashboard/"
+                    
+                     component={RouterLink} to="/boletosbaixa"
                   >
                     Boletos Baixa
                   </ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Cancelamento</ListItemButton>
+                  <ListItemButton component={RouterLink} to="/cancelamento">Cancelamento</ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Mudança de Plano</ListItemButton>
+                  <ListItemButton component={RouterLink} to="/mudarplano" >Mudança de Plano</ListItemButton>
                 </ListItem>
                 <ListItem>
                   <ListItemButton>Mudança de Titular</ListItemButton>

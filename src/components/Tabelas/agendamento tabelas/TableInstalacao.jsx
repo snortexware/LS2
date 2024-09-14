@@ -363,7 +363,7 @@ export default function TableInstalacao() {
                   </td>
                   <td style={{ textAlign: "center" }}>
                     
-                      <div>
+                      <div style={{color:"yellow"}}>
                         {row.status}
                       </div>
 

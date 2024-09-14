@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
+import App from "./App.jsx";
 import reportWebVitals from "./reportWebVitals";
 import { Route, Routes, RouteProvider } from "react-router-dom";
 import {
@@ -16,12 +16,20 @@ import TableInstalacao from "./components/Tabelas/agendamento tabelas/TableInsta
 import Header from "./components/Header";
 import SimpleChart from "./components/charts/chart";
 import Inicio from "./components/charts/inicio";
+import TableBoletos from "./components/Tabelas/processos tabelas/TableBoletos";
+import TableCancelamento from "./components/Tabelas/processos tabelas/TableCancelamento";
+import TablePlano from "./components/Tabelas/processos tabelas/TablePlano";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "/",
+        element: <Inicio />,
+        
+      },
       {
         path: "/inicio",
         element: <Inicio />,
@@ -37,12 +45,16 @@ const router = createBrowserRouter([
         element: <TableManutencao />,
       },
       {
-        path: "/alteracao_plano",
-        element: <TableManutencao />,
+        path: "/boletosbaixa",
+        element: <TableBoletos />,
       },
       {
-        path: "/ordertable1",
-        element: <TableManutencao />,
+        path: "/cancelamento",
+        element: <TableCancelamento />,
+      },
+      {
+        path: "/mudarplano",
+        element: <TablePlano />,
       },
       {
         path: "/ordertable1",

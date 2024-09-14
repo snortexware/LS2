@@ -33,9 +33,10 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { motion, AnimatePresence } from "framer-motion";
-import BasicModalDialog from "../../modals/modal";
+import ModalCancelamento from "../../modals/modalCancelamento";
 import Stack from "@mui/joy/Stack";
 import MenuOpen from "@mui/icons-material/MenuOpen";
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -84,7 +85,7 @@ const getColor = (periodo) => {
   }
 };
 
-export default function OrderTable() {
+export default function TableCancelamento() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
@@ -94,6 +95,7 @@ export default function OrderTable() {
   const handleSave = (pedido) => {
     setRows([...rows, pedido]);
     setHandleAbrir(false);
+
   };
 
   const renderFilters = () => (
@@ -125,9 +127,33 @@ export default function OrderTable() {
       </Box>
     </React.Fragment>
   );
-
+  
   return (
     <>
+    <Stack direction={"rows"} sx={{
+    justifyContent: "flex-start",
+    alignItems: "center",
+  }} columnGap={1} spacing={3}>
+
+    
+    <Typography level="h2" component="h1">
+              CLIENTES | 
+              
+            </Typography>
+            <motion.div
+       
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{
+          opacity: 1,
+          x: 0,
+        }}
+        animate={{ opacity: 1, x: 0}}
+        exit={{ opacity: 0, x: 50 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+            <Typography level="h4" color="neutral" >CANCELAMENTO</Typography>
+            </motion.div>
+            </Stack>
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -211,136 +237,137 @@ export default function OrderTable() {
           >
             <thead>
               <tr>
-                <th
+              <th
                   style={{
                     whiteSpace: "normal",
-                    minWidth: 50,
-                    padding: "15px 20px",
+                    minWidth: 30,
+                    padding: "9px 2px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
-                  Codigo Cliente
+                  Codigo
+                  <br></br> 
+                  Cliente
                 </th>
                 <th
                   style={{
-                    minWidth: 100,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
+                    whiteSpace: "normal",
+                    minWidth: 150,
+                    padding: "15px 5px",
+                    textAlign: "center", 
                   }}
                 >
                   Nome
                 </th>
+                
+               
+              
+             
+               
                 <th
                   style={{
-                    minWidth: 150,
+                    minWidth: 200,
                     padding: "15px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
-                  Data
+                  Motivo
+                </th>
+              
+                
+                <th
+                 style={{
+                  minWidth: 130,
+                  padding: "15px 6px",
+                  textAlign: "center", // Centraliza o texto do cabeçalho
+                }}
+                >
+                  Status
+                </th>
+                <th
+                  style={{
+                    minWidth: 30,
+                    padding: "10px 6px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
+                    lineBreak: "anywhere",
+                  }}
+                >
+                  Cadastrado
+                  <br></br>
+                   Por
                 </th>
                 <th
                   style={{
                     minWidth: 150,
-                    padding: "15px 6px",
+                    padding: "10px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
+                    lineBreak: "anywhere",
                   }}
                 >
-                  Perido
+                  Data/Hora
+                  <br></br>
+                    Cadastro	
                 </th>
                 <th
                   style={{
-                    minWidth: 150,
+                    width: 50,
                     padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Cidade
-                </th>
-                <th
-                  style={{
-                    minWidth: 150,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Bairro
-                </th>
-                <th
-                  style={{
-                    minWidth: 250,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Comentario
-                </th>
-                <th
-                  style={{
-                    width: 50
-                    
+                    textAlign: "center",
 
                   }}
                 >
+                  Ação
                 </th>
+              
               </tr>
+             
             </thead>
             <tbody>
               {[...rows].sort(getComparator(order, "id")).map((row) => (
                 <tr key={row.id}>
-                  <td style={{ textAlign: "center" }}>
-                    <Typography color="success" level="title-md" noWrap>
-                      {row.codigo}
-                    </Typography>
-                  </td>
+                
+                  
 
-                  <td style={{ textAlign: "center" }}>
-                    <p>{row.name}</p>
+                  <td style={{ minWidth: 90, textAlign: "center" }}>
+                    <p>{row.codigo}</p>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <p>{row.date}</p>
+                    <p>{row.nome}</p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
-                    <Chip
-                      sx={{ minWidth: 90 }}
-                      variant="solid"
-                      size="sm"
-                      startDecorator={
-                        {
-                          "Dia Todo": <CheckRoundedIcon />,
-                          Manhã: <CheckRoundedIcon />,
-                          Tarde: <CheckRoundedIcon />,
-                        }[row.periodo]
-                      }
-                      color={getColor(row.periodo)}
-                    >
-                      {row.periodo}
-                    </Chip>
-                  </td>
+                 
                   <td style={{ textAlign: "center" }}>
                     <div>
-                      <p>{row.cidade}</p>
+                      <p>{row.motivo}</p>
                     </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
                                     
                       <div>
-                        <p>{row.bairro}</p>
+                        <p>{row.status}</p>
+                      </div>
+                  
+                  </td>
+                  <td style={{ lineBreak: "auto",textAlign: "center" }}>
+                                    
+                      <div>
+                        <p>{row.user}</p>
+                      </div>
+                  
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                                    
+                      <div>
+                        <p>{row.data}</p>
                       </div>
                   
                   </td>
                   <td style={{ textAlign: "center" }}>
                     
-                      <div>
-                        {row.comentario}
-                      </div>
+                    <RowMenu />
 
-                      
-                    
+  
                   </td>
-                  <td>
-                  <RowMenu />
-                  </td>
+                 
                 </tr>
               ))}
             </tbody>
@@ -390,7 +417,7 @@ export default function OrderTable() {
       </>
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {handleAbrir && (
-          <BasicModalDialog
+          <ModalCancelamento
             onSave={handleSave}
             sx={{ position: "absolute", zIndex: 1400 }}
             handleAbrir={handleAbrir}

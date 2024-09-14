@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
@@ -22,59 +23,63 @@ import Meme from "./algo"
 import SecretSoundPlayer from "./algo";
 import Inicio from "./components/charts/inicio";
 
-export default function App() {
-  
+const App = () => {
   return (
     <CssVarsProvider disableTransitionOnChange>
-      <CssBaseline />
+    <CssBaseline />
+    <Box
+      sx={{
+        display: "flex",
+        minHeight: "100dvh",
+      }}
+    >
+      <Header />
+
+      <Sidebar style={{ cursor: "url(" + minecraft + ", auto)" }} />
       <Box
+        component="main"
+        className="MainContent"
         sx={{
+          px: { xs: 2, md: 6 },
+          pt: {
+            xs: "calc(12px + var(--Header-height))",
+            sm: "calc(12px + var(--Header-height))",
+            md: 3,
+          },
+          pb: { xs: 2, sm: 2, md: 3 },
+          flex: 1,
           display: "flex",
-          minHeight: "100dvh",
+          flexDirection: "column",
+          minWidth: 0,
+          height: "100dvh",
+          gap: 1,
         }}
       >
-        <Header />
-
-        <Sidebar style={{ cursor: "url(" + minecraft + ", auto)" }} />
         <Box
-          component="main"
-          className="MainContent"
           sx={{
-            px: { xs: 2, md: 6 },
-            pt: {
-              xs: "calc(12px + var(--Header-height))",
-              sm: "calc(12px + var(--Header-height))",
-              md: 3,
-            },
-            pb: { xs: 2, sm: 2, md: 3 },
-            flex: 1,
+            marginBottom: 0,
             display: "flex",
-            flexDirection: "column",
-            minWidth: 0,
-            height: "100dvh",
+            mb: 1,
             gap: 1,
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: { xs: "start", sm: "center" },
+            flexWrap: "wrap",
+            justifyContent: "space-between",
           }}
         >
-          <Box
-            sx={{
-              marginBottom: 0,
-              display: "flex",
-              mb: 1,
-              gap: 1,
-              flexDirection: { xs: "column", sm: "row" },
-              alignItems: { xs: "start", sm: "center" },
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-            }}
-          >
-            
-            
-          </Box>
-            <SecretSoundPlayer />
-            
-          <Outlet />
+          
+          
         </Box>
+          <SecretSoundPlayer />
+          
+          
+        <Outlet />
       </Box>
-    </CssVarsProvider>
+    </Box>
+  </CssVarsProvider>
+    
   );
-}
+  
+};
+
+export default App;
