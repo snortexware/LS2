@@ -184,7 +184,7 @@ export default function Sidebar() {
           }}
         >
           <ListItem>
-            <ListItemButton component={RouterLink} to="/inicio">
+            <ListItemButton component={RouterLink} to="/">
               <HomeRoundedIcon sx={{ marginRight: 1 }} />
               <ListItemContent>
                 <Typography level="title-sm">Inicio</Typography>

@@ -3,18 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import reportWebVitals from "./reportWebVitals";
-import { Route, Routes, RouteProvider } from "react-router-dom";
-import {
-  createBrowserRouter,
-  BrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Typography from "@mui/joy/Typography";
-import Sidebar from "./components/Sidebar";
-import  TableManutencao  from "./components/Tabelas/agendamento tabelas/TableManutencao";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import TableManutencao from "./components/Tabelas/agendamento tabelas/TableManutencao";
 import TableInstalacao from "./components/Tabelas/agendamento tabelas/TableInstalacao";
-import Header from "./components/Header";
-import SimpleChart from "./components/charts/chart";
 import Inicio from "./components/charts/inicio";
 import TableBoletos from "./components/Tabelas/processos tabelas/TableBoletos";
 import TableCancelamento from "./components/Tabelas/processos tabelas/TableCancelamento";
@@ -28,17 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Inicio />,
-        
-      },
-      {
-        path: "/inicio",
-        element: <Inicio />,
-        
       },
       {
         path: "/instalacao",
         element: <TableInstalacao />,
-        
       },
       {
         path: "/manutencao",
@@ -71,7 +55,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

@@ -1,17 +1,12 @@
 import * as React from 'react';
-import Button from '@mui/joy/Button';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import CardActions from '@mui/joy/CardActions';
-import CircularProgress from '@mui/joy/CircularProgress';
 import Typography from '@mui/joy/Typography';
-import SvgIcon from '@mui/joy/SvgIcon';
 import { Stack } from '@mui/joy';
 import RouterIcon from '@mui/icons-material/Router';
 import BlockIcon from '@mui/icons-material/Block';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
-import { motion } from "framer-motion"
 
 
 export default function CardInvertedColors() {
@@ -21,9 +16,6 @@ export default function CardInvertedColors() {
     <Card variant="solid" color="success" invertedColors sx={{textAlign: 'center',
         alignItems: 'center',
         width: 343,
-        // to make the demo resizable
-        overflow: 'auto',
-        resize: 'horizontal',
         '--icon-size': '100px',width: 170}}>
       <CardContent orientation="vertical">
    
@@ -41,9 +33,6 @@ export default function CardInvertedColors() {
     <Card variant="solid" color="danger" invertedColors sx={{ textAlign: 'center',
         alignItems: 'center',
         width: 343,
-        // to make the demo resizable
-        overflow: 'auto',
-        resize: 'horizontal',
         '--icon-size': '100px', width: 180}}>
       <CardContent orientation="vertical" sx={{alignItems: 'center',justifyContent: "center"}}>
         <CardContent>
@@ -60,9 +49,6 @@ export default function CardInvertedColors() {
     <Card variant="solid" color="primary" invertedColors sx={{textAlign: 'center',
         alignItems: 'center',
         width: 343,
-        // to make the demo resizable
-        overflow: 'auto',
-        resize: 'horizontal',
         '--icon-size': '100px',width: 180}}>
       <CardContent orientation="vertical">
         
@@ -78,10 +64,6 @@ export default function CardInvertedColors() {
     </Card>
     <Card variant="solid" color="primary" invertedColors sx={{textAlign: 'center',
         alignItems: 'center',
-        
-        // to make the demo resizable
-        overflow: 'auto',
-        resize: 'horizontal',
         '--icon-size': '100px',width: 180}}>
       <CardContent orientation="vertical">
         
@@ -99,9 +81,6 @@ export default function CardInvertedColors() {
     <Card variant="solid" color="primary" invertedColors sx={{textAlign: 'center',
         alignItems: 'center',
         width: 343,
-        // to make the demo resizable
-        overflow: 'auto',
-        resize: 'horizontal',
         '--icon-size': '100px',width: 180}}>
       <CardContent orientation="vertical">
         <CardContent>

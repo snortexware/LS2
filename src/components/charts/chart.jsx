@@ -1,7 +1,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import 'chartjs-adapter-date-fns'; // Import date adapter for time scales
+import 'chartjs-adapter-date-fns';
+import { Box } from '@mui/joy';
 
 // Register necessary components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -30,10 +31,11 @@ const MultiAxisLineChart = () => {
 
   // Chart options
   const options = {
+    responsive: true, // Keep responsive behavior
+    maintainAspectRatio: false, // Allow custom height
     plugins: {
       title: {
         display: true,
-        
       },
       legend: {
         display: true,
@@ -51,7 +53,6 @@ const MultiAxisLineChart = () => {
         position: 'left',
         title: {
           display: true,
-          
         },
         ticks: {
           beginAtZero: true,
@@ -62,10 +63,9 @@ const MultiAxisLineChart = () => {
         position: 'right',
         title: {
           display: true,
-          
         },
         grid: {
-          drawOnChartArea: false, // Only the primary y-axis grid lines are displayed
+          drawOnChartArea: false,
         },
         ticks: {
           beginAtZero: true,
@@ -75,10 +75,9 @@ const MultiAxisLineChart = () => {
   };
 
   return (
-    <div style={{minWidth: "500px", maxWidth: "500px"}}>
-     
-      <Line  data={data} options={options} />
-    </div>
+    <Box alignItems="flex-start" sx={{ minwidth: "60%", maxWidth: "100%", minHeight: "50vh", maxHeight: "50vh"  }}>
+      <Line data={data} options={options} />
+    </Box>
   );
 };
 

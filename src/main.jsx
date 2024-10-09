@@ -70,10 +70,11 @@ export default function App() {
             
             
           </Box>
-            <SecretSoundPlayer />
+         
             
-          <Outlet />
+          
         </Box>
+        <Outlet />
       </Box>
     </CssVarsProvider>
   );

@@ -226,10 +226,10 @@ export default function TablePlano() {
               "--TableRow-hoverBackground":
                 "var(--joy-palette-background-level1)",
               "--TableCell-paddingY": "8px",
-              "--TableCell-paddingX": "10px",
+              "--TableCell-paddingX": "15px",
               position: "relative",
               zIndex: 0,
-              "@media (min-width: 1200px)": {
+              "@media (min-width: 1350px)": {
                 display: "table",
                 margin: "0 auto",
               },
@@ -351,7 +351,7 @@ export default function TablePlano() {
                 </th>
                 <th
                   style={{
-                    width: 50,
+                    width: 70,
                     padding: "20px 6px",
                     textAlign: "center",
 

@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "dayjs": "^1.11.12",
     "framer-motion": "^11.3.4",
+    "ls": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
