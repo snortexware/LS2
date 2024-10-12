@@ -240,7 +240,7 @@ export default function TablePlano() {
               <th
                   style={{
                     whiteSpace: "normal",
-                    minWidth: 30,
+                    minWidth: 20,
                     padding: "9px 2px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
@@ -294,12 +294,14 @@ export default function TablePlano() {
                 <th
                   style={{
                     minWidth: 150,
-                    padding: "20px 6px",
+                    padding: "10px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                     lineBreak: "anywhere",
                   }}
                 >
-                  Plano novo
+                  Plano
+                  <br></br> 
+                   Novo
                 </th>
                 
                 <th
@@ -369,7 +371,7 @@ export default function TablePlano() {
                 
                   
 
-                  <td style={{ minWidth: 90, textAlign: "center" }}>
+                  <td style={{ minWidth: 50, textAlign: "center" }}>
                     <p>{row.codigo}</p>
                   </td>
                   <td style={{ textAlign: "center" }}>
@@ -378,8 +380,29 @@ export default function TablePlano() {
                  
                   <td style={{ textAlign: "center" }}>
                     <div>
-                      <p>{row.motivo}</p>
+                      <p>{row.planoAntigo}</p>
                     </div>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                                    
+                      <div>
+                        <p>{row.valorAntigo}</p>
+                      </div>
+                  
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                                    
+                      <div>
+                        <p>{row.planoNovo}</p>
+                      </div>
+                  
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                                    
+                      <div>
+                        <p>{row.valorNovo}</p>
+                      </div>
+                  
                   </td>
                   <td style={{ textAlign: "center" }}>
                                     
@@ -388,6 +411,7 @@ export default function TablePlano() {
                       </div>
                   
                   </td>
+                  
                   <td style={{ lineBreak: "auto",textAlign: "center" }}>
                                     
                       <div>

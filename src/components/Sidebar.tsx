@@ -143,7 +143,7 @@ export default function Sidebar() {
         onClick={() => closeSidebar()}
       />
       <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-        <IconButton component={RouterLink} to="/inicio"> 
+        <IconButton component={RouterLink} to="/"> 
         <motion.div
       
       onClick={(e) => e.stopPropagation()}
@@ -306,7 +306,7 @@ export default function Sidebar() {
                   <ListItemButton component={RouterLink} to="/mudarplano" >Mudança de Plano</ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Mudança de Titular</ListItemButton>
+                  <ListItemButton component={RouterLink} to="/mudartitular" >Mudança de Titular</ListItemButton>
                 </ListItem>
                 <ListItem>
                   <ListItemButton>Controle de OS</ListItemButton>

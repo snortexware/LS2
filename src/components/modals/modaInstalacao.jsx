@@ -51,18 +51,18 @@ const ModalInstalacao = ({ handleClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(pedido); // Passa os dados para o componente pai
-    handleClose(); // Fecha o modal
+    onSave(pedido); 
+    handleClose();
   };
   
   const formattedDate = moment(pedido.data).format('DD/MM/YYYY');
   const today = new Date().toISOString().split("T")[0];
 
-  // Prevent body from scrolling when modal is open
+ 
   React.useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'auto'; // Restore overflow when modal is closed
+      document.body.style.overflow = 'auto';
     };
   }, []);
 
@@ -74,13 +74,13 @@ const ModalInstalacao = ({ handleClose, onSave }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
-        style={{ position: 'relative', zIndex: 1300 }} // Ensure the modal is above other content
+        style={{ position: 'relative', zIndex: 1300 }} 
       >
         <ModalDialog
           sx={{
-            overflow: 'auto', // Allow scrolling if content is too large
-            maxWidth: '90vw', // Adjust as needed
-            maxHeight: '90vh', // Adjust as needed
+            overflow: 'auto', 
+            maxWidth: '90vw', 
+            maxHeight: '90vh',
             p: 3,
             bgcolor: 'background.paper',
           }}

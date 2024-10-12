@@ -5,6 +5,7 @@ import { useState } from "react";
 import Typewriter from './typed';
 import Box from "@mui/joy/Box";
 import Typography from "@mui/joy/Typography";
+import PieChart from "./chartpie";
 
 const Inicio = () => {
     const [user, setUser] = useState({ dev: 'Lucas', usuario: '' });
@@ -26,17 +27,30 @@ const Inicio = () => {
     }
 
     return (
+        
         <>
-            <Stack alignItems="center" direction={"column"} spacing={4}>
+            <Box sx={{
+    position: "relative",
+    "@media (min-width: 1200px)": {
+      display: "flex",
+      margin: "0 auto",
+    },
+}}>
+            <Stack alignItems="center" direction={"column"} spacing={3}>
                 <Typography level="h1" style={{alignItems: 'flex-start', height: '2em' }}>
                     <Typewriter text={saudacao + " " + user.dev} delay={40} />
                 </Typography>
                 <CardInvertedColors />
-            </Stack>
-            <Box>
+                <Stack alignItems="center" sx={{minWidth: '50%', maxWidth: "100%"  }} spacing={10} direction="row">
+                <PieChart/>
                 <MultiAxisLineChart />
+            </Stack>
+            </Stack>
+           
+
             </Box>
         </>
+         
     );
 }
 

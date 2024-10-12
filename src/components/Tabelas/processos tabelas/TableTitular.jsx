@@ -23,7 +23,7 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import Dropdown from "@mui/joy/Dropdown";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
@@ -33,7 +33,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { motion, AnimatePresence } from "framer-motion";
-import BasicModalDialog from "../../modals/modal";
+import ModalTitular from "../../modals/modalTitular";
 import Stack from "@mui/joy/Stack";
 import MenuOpen from "@mui/icons-material/MenuOpen";
 
@@ -84,7 +84,7 @@ const getColor = (periodo) => {
   }
 };
 
-export default function OrderTable() {
+export default function TableTitular() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
@@ -128,6 +128,33 @@ export default function OrderTable() {
 
   return (
     <>
+      <Stack
+        direction={"rows"}
+        sx={{
+          justifyContent: "flex-start",
+          alignItems: "center",
+        }}
+        columnGap={1}
+        spacing={3}
+      >
+        <Typography level="h2" component="h1">
+          MUDANÇA |
+        </Typography>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <Typography level="h4" color="neutral">
+            DE TITULAR
+          </Typography>
+        </motion.div>
+      </Stack>
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -200,10 +227,10 @@ export default function OrderTable() {
               "--TableRow-hoverBackground":
                 "var(--joy-palette-background-level1)",
               "--TableCell-paddingY": "8px",
-              "--TableCell-paddingX": "10px",
+              "--TableCell-paddingX": "15px",
               position: "relative",
               zIndex: 0,
-              "@media (min-width: 1200px)": {
+              "@media (min-width: 1400px)": {
                 display: "table",
                 margin: "0 auto",
               },
@@ -214,132 +241,126 @@ export default function OrderTable() {
                 <th
                   style={{
                     whiteSpace: "normal",
-                    minWidth: 50,
-                    padding: "15px 20px",
+                    minWidth: 20,
+                    padding: "10px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
-                  Codigo Cliente
+                  Codigo
+                  <br></br>
+                  Cliente Antigo
                 </th>
                 <th
                   style={{
-                    minWidth: 100,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Nome
-                </th>
-                <th
-                  style={{
+                    whiteSpace: "normal",
                     minWidth: 150,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
+                    padding: "20px 2px",
+                    textAlign: "center",
                   }}
                 >
-                  Data
+                  Nome Titular Antigo
                 </th>
-                <th
-                  style={{
-                    minWidth: 150,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Perido
-                </th>
-                <th
-                  style={{
-                    minWidth: 150,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Cidade
-                </th>
-                <th
-                  style={{
-                    minWidth: 150,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Bairro
-                </th>
-                <th
-                  style={{
-                    minWidth: 250,
-                    padding: "15px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Comentario
-                </th>
-                <th
-                  style={{
-                    width: 50
-                    
 
+                <th
+                  style={{
+                    whiteSpace: "normal",
+                    minWidth: 20,
+                    padding: "10px 6px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
+                  Codigo
+                  <br></br>
+                  Cliente Novo
+                </th>
+                <th
+                  style={{
+                    whiteSpace: "normal",
+                    minWidth: 150,
+                    padding: "20px 5px",
+                    textAlign: "center",
+                  }}
+                >
+                  Nome Titular Novo
+                </th>
+                <th
+                  style={{
+                    minWidth: 130,
+                    padding: "20px 6px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
+                  }}
+                >
+                  Status
+                </th>
+                <th
+                  style={{
+                    minWidth: 30,
+                    padding: "10px 6px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
+                    lineBreak: "anywhere",
+                  }}
+                >
+                  Cadastrado
+                  <br></br>
+                  Por
+                </th>
+                <th
+                  style={{
+                    minWidth: 150,
+                    padding: "10px 6px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
+                    lineBreak: "anywhere",
+                  }}
+                >
+                  Data/Hora
+                  <br></br>
+                  Cadastro
+                </th>
+                <th
+                  style={{
+                    width: 70,
+                    padding: "20px 6px",
+                    textAlign: "center",
+                  }}
+                >
+                  Ação
                 </th>
               </tr>
             </thead>
             <tbody>
               {[...rows].sort(getComparator(order, "id")).map((row) => (
                 <tr key={row.id}>
+                  <td style={{ minWidth: 50, textAlign: "center" }}>
+                    <p>{row.codigoClienteAntigo}</p>
+                  </td>
                   <td style={{ textAlign: "center" }}>
-                    <Typography color="success" level="title-md" noWrap>
-                      {row.codigo}
-                    </Typography>
+                    <p>{row.clienteAntigo}</p>
+                  </td>
+                  <td style={{ minWidth: 50, textAlign: "center" }}>
+                    <p>{row.codigoClienteNovo}</p>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <p>{row.clienteNovo}</p>
                   </td>
 
                   <td style={{ textAlign: "center" }}>
-                    <p>{row.name}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{row.date}</p>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <Chip
-                      sx={{ minWidth: 90 }}
-                      variant="solid"
-                      size="sm"
-                      startDecorator={
-                        {
-                          "Dia Todo": <CheckRoundedIcon />,
-                          Manhã: <CheckRoundedIcon />,
-                          Tarde: <CheckRoundedIcon />,
-                        }[row.periodo]
-                      }
-                      color={getColor(row.periodo)}
-                    >
-                      {row.periodo}
-                    </Chip>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
                     <div>
-                      <p>{row.cidade}</p>
+                      <p>{row.status}</p>
+                    </div>
+                  </td>
+
+                  <td style={{ lineBreak: "auto", textAlign: "center" }}>
+                    <div>
+                      <p>{row.user}</p>
                     </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.bairro}</p>
-                      </div>
-                  
+                    <div>
+                      <p>{row.data}</p>
+                    </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    
-                      <div>
-                        {row.comentario}
-                      </div>
-
-                      
-                    
-                  </td>
-                  <td>
-                  <RowMenu />
+                    <RowMenu />
                   </td>
                 </tr>
               ))}
@@ -390,7 +411,7 @@ export default function OrderTable() {
       </>
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {handleAbrir && (
-          <BasicModalDialog
+          <ModalTitular
             onSave={handleSave}
             sx={{ position: "absolute", zIndex: 1400 }}
             handleAbrir={handleAbrir}
