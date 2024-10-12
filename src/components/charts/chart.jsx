@@ -148,7 +148,7 @@ const MultiAxisLineChart = () => {
   };
 
   return (
-    <Box sx={{width: "580px", height: "300px"}} >
+    <Box  sx={{minWidth: "40vh", maxWidth: "45vh", minHeight: "50vh", maxHeight: "45vh"}} >
      
       <Line data={data} options={options} />
     </Box>

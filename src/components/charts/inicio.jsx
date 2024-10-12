@@ -28,20 +28,18 @@ const Inicio = () => {
 
     return (
         
-        <>
+        <div style={{}}>
             <Box sx={{
-    position: "relative",
-    "@media (min-width: 1200px)": {
-      display: "flex",
-      margin: "0 auto",
-    },
+                size: "auto",
+    position: "auto",
+    minWidth: "60%", maxWidth: "90%"
 }}>
             <Stack alignItems="center" direction={"column"} spacing={3}>
-                <Typography level="h1" style={{alignItems: 'flex-start', height: '2em' }}>
+                <Typography level="h1" style={{height: '2em' }}>
                     <Typewriter text={saudacao + " " + user.dev} delay={40} />
                 </Typography>
                 <CardInvertedColors />
-                <Stack alignItems="center" sx={{minWidth: '50%', maxWidth: "100%"  }} spacing={10} direction="row">
+                <Stack alignItems="center" sx={{minWidth: '40vh', maxWidth: "100%"  }} spacing={10} direction="row">
                 <PieChart/>
                 <MultiAxisLineChart />
             </Stack>
@@ -49,7 +47,7 @@ const Inicio = () => {
            
 
             </Box>
-        </>
+            </div>
          
     );
 }

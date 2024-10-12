@@ -12,7 +12,7 @@ import {Link as RouterLink} from "react-router-dom"
 
 export default function CardInvertedColors() {
   return (
-    <Stack  direction={"row"} spacing={5}>
+    <Stack alignContent={"center"} sx={{ minWidth: "30vh", maxWidth: "100%"}} direction={"row"} spacing={5}>
       
       <Card
   component={RouterLink}
@@ -24,16 +24,16 @@ export default function CardInvertedColors() {
     textDecoration: 'none', // Add this to remove underline
     textAlign: 'center',
     alignItems: 'center',
-    width: 343,
+    minWidth: "25vh", maxWidth: "40vh", minHeight: "20vh", maxHeight: "50vh",
     '--icon-size': '100px',
-    width: 170
+    
   }}
 >
   <CardContent orientation="vertical">
     <CardContent>
       <Stack alignItems="center" spacing={1}>
-        <RouterIcon />
-        <Typography  level="body-lg">
+        <RouterIcon sx={{minWidth: "5vh", maxWidth: "10vh", minHeight: "5vh", maxHeight: "10vh",}} />
+        <Typography sx={{fontSize:"auto"}}  level="body-lg">
           Instalações
         </Typography>
       </Stack>
@@ -48,8 +48,8 @@ export default function CardInvertedColors() {
   
     <Card component={RouterLink} to="/cancelamento" variant="solid" color="danger" invertedColors sx={{textDecoration: 'none', textAlign: 'center',
         alignItems: 'center',
-        maxWidth: 343,
-        '--icon-size': '100px', width: 180}}>
+         minWidth: "25vh", maxWidth: "40vh", minHeight: "20vh", maxHeight: "50vh",
+        '--icon-size': '100px',}}>
       <CardContent orientation="vertical" sx={{alignItems: 'center',justifyContent: "center"}}>
         <CardContent>
           <Stack  alignItems="center" spacing={1}>
@@ -64,8 +64,8 @@ export default function CardInvertedColors() {
     
     <Card component={RouterLink} to="/manutencao" variant="solid" color="primary" invertedColors sx={{ textDecoration: 'none',textAlign: 'center',
         alignItems: 'center',
-        width: 343,
-        '--icon-size': '100px',width: 180}}>
+         minWidth: "25vh", maxWidth: "40vh", minHeight: "20vh", maxHeight: "50vh",
+        '--icon-size': '100px'}}>
       <CardContent orientation="vertical">
         
         <CardContent>
@@ -80,7 +80,8 @@ export default function CardInvertedColors() {
     </Card>
     <Card component={RouterLink} to="/mudarplano" variant="solid" color="primary" invertedColors sx={{textDecoration: 'none',textAlign: 'center',
         alignItems: 'center',
-        '--icon-size': '100px',width: 180, backgroundColor: "#20615b"}}>
+        minWidth: "25vh", maxWidth: "40vh", minHeight: "20vh", maxHeight: "50vh",
+        '--icon-size': '100px', backgroundColor: "#20615b"}}>
       <CardContent orientation="vertical">
         
         <CardContent>
@@ -96,8 +97,8 @@ export default function CardInvertedColors() {
     </Card>
     <Card component={RouterLink} to="/mudarplano" variant="solid" invertedColors sx={{textDecoration: 'none',textAlign: 'center',
         alignItems: 'center',
-        width: 343,
-        '--icon-size': '100px',width: 180, backgroundColor:"#f16821"}}>
+        
+        '--icon-size': '100px',minWidth: "25vh", maxWidth: "40vh", minHeight: "20vh", maxHeight: "50vh", backgroundColor:"#f16821"}}>
       <CardContent orientation="vertical">
         <CardContent>
         <Stack  alignItems="center"spacing={1}>
