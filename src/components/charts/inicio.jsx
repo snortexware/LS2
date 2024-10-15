@@ -39,7 +39,7 @@ const Inicio = () => {
                     <Typewriter text={saudacao + " " + user.dev} delay={40} />
                 </Typography>
                 <CardInvertedColors />
-                <Stack alignItems="center" sx={{minWidth: '40vh', maxWidth: "100%"  }} spacing={10} direction="row">
+                <Stack alignItems="center" spacing={3} direction="row">
                 <PieChart/>
                 <MultiAxisLineChart />
             </Stack>

@@ -53,7 +53,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function RowMenu() {
+const RowMenu = ({ row, onEdit, onDelete }) => {
   return (
     <Dropdown>
       <MenuButton
@@ -63,13 +63,13 @@ function RowMenu() {
         <DriveFileRenameOutlineIcon />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
-        <MenuItem>Editar</MenuItem>
+        <MenuItem onClick={() => onEdit(row)}>Editar</MenuItem>
         <Divider />
-        <MenuItem color="danger">Deletar</MenuItem>
+        <MenuItem color="danger" onClick={() => onDelete(row.id)}>Deletar</MenuItem>
       </Menu>
     </Dropdown>
   );
-}
+};
 
 const getColor = (periodo) => {
   switch (periodo) {
@@ -88,12 +88,38 @@ export default function TableTitular() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [currentRow, setCurrentRow] = useState(null);
   const [rows, setRows] = useState([]);
+  const [nextId, setNextId] = useState(1);
+
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
+
   const handleSave = (pedido) => {
-    setRows([...rows, pedido]);
+    if (editMode) {
+      const updatedRows = rows.map((row) =>
+        row.id === currentRow.id ? { ...currentRow, ...pedido } : row
+      );
+      setRows(updatedRows);
+    } else {
+      const newEntry = { ...pedido, id: nextId };
+      setRows([...rows, newEntry]);
+      setNextId(nextId + 1);
+    }
     setHandleAbrir(false);
+    setEditMode(false);
+    setCurrentRow(null);
+  };
+
+  const handleEdit = (row) => {
+    setCurrentRow(row);
+    setEditMode(true);
+    setHandleAbrir(true);
+  };
+
+  const handleDelete = (id) => {
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   const renderFilters = () => (
@@ -118,7 +144,7 @@ export default function TableTitular() {
           size="sm"
           color="success"
           endDecorator={<KeyboardArrowRightIcon />}
-          onClick={() => (handleAbrir ? fechado() : aberto())}
+          onClick={aberto}
         >
           Cadastrar
         </Button>
@@ -169,7 +195,7 @@ export default function TableTitular() {
           size="sm"
           variant="outlined"
           color="neutral"
-          onClick={() => setHandleAbrir(true)}
+          onClick={aberto}
         >
           <FilterAltIcon />
         </IconButton>
@@ -238,91 +264,28 @@ export default function TableTitular() {
           >
             <thead>
               <tr>
-                <th
-                  style={{
-                    whiteSpace: "normal",
-                    minWidth: 20,
-                    padding: "10px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Codigo
-                  <br></br>
-                  Cliente Antigo
+                <th style={{ whiteSpace: "normal", minWidth: 20, padding: "10px 6px", textAlign: "center" }}>
+                  Codigo<br />Cliente Antigo
                 </th>
-                <th
-                  style={{
-                    whiteSpace: "normal",
-                    minWidth: 150,
-                    padding: "20px 2px",
-                    textAlign: "center",
-                  }}
-                >
+                <th style={{ whiteSpace: "normal", minWidth: 150, padding: "20px 2px", textAlign: "center" }}>
                   Nome Titular Antigo
                 </th>
-
-                <th
-                  style={{
-                    whiteSpace: "normal",
-                    minWidth: 20,
-                    padding: "10px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
-                  Codigo
-                  <br></br>
-                  Cliente Novo
+                <th style={{ whiteSpace: "normal", minWidth: 20, padding: "10px 6px", textAlign: "center" }}>
+                  Codigo<br />Cliente Novo
                 </th>
-                <th
-                  style={{
-                    whiteSpace: "normal",
-                    minWidth: 150,
-                    padding: "20px 5px",
-                    textAlign: "center",
-                  }}
-                >
+                <th style={{ whiteSpace: "normal", minWidth: 150, padding: "20px 5px", textAlign: "center" }}>
                   Nome Titular Novo
                 </th>
-                <th
-                  style={{
-                    minWidth: 130,
-                    padding: "20px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                  }}
-                >
+                <th style={{ minWidth: 130, padding: "20px 6px", textAlign: "center" }}>
                   Status
                 </th>
-                <th
-                  style={{
-                    minWidth: 30,
-                    padding: "10px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                    lineBreak: "anywhere",
-                  }}
-                >
-                  Cadastrado
-                  <br></br>
-                  Por
+                <th style={{ minWidth: 30, padding: "10px 6px", textAlign: "center", lineBreak: "anywhere" }}>
+                  Cadastrado<br />Por
                 </th>
-                <th
-                  style={{
-                    minWidth: 150,
-                    padding: "10px 6px",
-                    textAlign: "center", // Centraliza o texto do cabeçalho
-                    lineBreak: "anywhere",
-                  }}
-                >
-                  Data/Hora
-                  <br></br>
-                  Cadastro
+                <th style={{ minWidth: 150, padding: "10px 6px", textAlign: "center", lineBreak: "anywhere" }}>
+                  Data/Hora<br />Cadastro
                 </th>
-                <th
-                  style={{
-                    width: 70,
-                    padding: "20px 6px",
-                    textAlign: "center",
-                  }}
-                >
+                <th style={{ width: 70, padding: "20px 6px", textAlign: "center" }}>
                   Ação
                 </th>
               </tr>
@@ -342,13 +305,11 @@ export default function TableTitular() {
                   <td style={{ textAlign: "center" }}>
                     <p>{row.clienteNovo}</p>
                   </td>
-
                   <td style={{ textAlign: "center" }}>
                     <div>
                       <p>{row.status}</p>
                     </div>
                   </td>
-
                   <td style={{ lineBreak: "auto", textAlign: "center" }}>
                     <div>
                       <p>{row.user}</p>
@@ -360,7 +321,7 @@ export default function TableTitular() {
                     </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <RowMenu />
+                    <RowMenu row={row} onEdit={handleEdit} onDelete={handleDelete} />
                   </td>
                 </tr>
               ))}
@@ -414,8 +375,8 @@ export default function TableTitular() {
           <ModalTitular
             onSave={handleSave}
             sx={{ position: "absolute", zIndex: 1400 }}
-            handleAbrir={handleAbrir}
             handleClose={fechado}
+            initialValues={editMode ? currentRow : {}}
           />
         )}
       </AnimatePresence>

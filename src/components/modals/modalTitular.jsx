@@ -31,6 +31,7 @@ const ModalTitular = ({ handleClose, onSave }) => {
   const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
 
   const [pedido, setPedido] = React.useState({
+    id:"",
     user: "Lucas",
     data: dataHoraFormatada,
     codigoClienteAntigo: "",
