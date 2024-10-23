@@ -79,8 +79,8 @@ function Toggler({
 export default function Sidebar() {
   const [logotema, setLogoTema] = useState(0);
   // inicializa a variavel com valor 0
-  const logoWH = require("./logo.png");
-  const logoBK = require("./logo2.png");
+  const logoWH = require("./assets/logo.png");
+  const logoBK = require("./assets/logo2.png");
   // Duas variaveis recebendo o valor do nosso png
   const [trocar, setTrocar] = useState(0);
 

@@ -15,21 +15,21 @@ import { FormControl, Button, Box, Typography } from "@mui/joy";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import moment from 'moment';
 
-const ModalBoletos = ({ handleClose, onSave, initialvalues = {} }) => {
+const ModalBoletos = ({ handleClose, onSave, initialValues = {} }) => {
   const data = new Date();
 
-  const dataHoraFormatada = moment(initialvalues.data).format('DD/MM/YYYY HH:mm:ss');
+  const dataHoraFormatada = moment(initialValues.data).format('DD/MM/YYYY HH:mm:ss');
   const [status, setStatus] = React.useState("Processando")
   const [pedido, setPedido] = React.useState({
-    codigo: initialvalues.codigo || '',
-    user: initialvalues.user || '',
-    nome: initialvalues.nome || '',
-    data: initialvalues.data || dataHoraFormatada,
-    motivo: initialvalues.motivo || '',
-    mes: initialvalues.mes || '',
-    bairro: initialvalues.bairro || '',
-    id: initialvalues.id || '',
-    status: initialvalues.status || status,
+    codigo: initialValues.codigo || '',
+    user: initialValues.user || '',
+    nome: initialValues.nome || '',
+    data: initialValues.data || dataHoraFormatada,
+    motivo: initialValues.motivo || '',
+    mes: initialValues.mes || '',
+    bairro: initialValues.bairro || '',
+    id: initialValues.id || '',
+    status: initialValues.status || status,
   });
 
   const handleChange = (e) => {

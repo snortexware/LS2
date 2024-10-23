@@ -72,9 +72,11 @@ export default function App() {
           </Box>
          
             
-          
-        </Box>
         <Outlet />
+        <CssVarsProvider>
+        <JoySignInSideTemplate />
+        </CssVarsProvider>
+        </Box>
       </Box>
     </CssVarsProvider>
   );

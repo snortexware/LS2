@@ -74,7 +74,7 @@ const BasicModalDialog = ({ handleClose, onSave, initialValues = {} }) => {
           >
             <ModalClose onClick={handleClose} />
             <Typography endDecorator={<ScheduleIcon />}>
-              {editMode ? "Cadastrar INSTALAÇÃO" : "Editar INSTALAÇÃO"}
+              {initialValues.id ? "Cadastrar INSTALAÇÃO" : "Editar INSTALAÇÃO"}
             </Typography>
 
             <form onSubmit={handleSubmit}>
