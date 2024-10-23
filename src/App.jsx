@@ -1,27 +1,11 @@
 
-import * as React from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
 import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
-import Breadcrumbs from "@mui/joy/Breadcrumbs";
-import Link from "@mui/joy/Link";
-import Typography from "@mui/joy/Typography";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-
-import Sidebar from "./components/Sidebar";
-import OrderTable from "./components/Tabelas/agendamento tabelas/TableManutencao";
-import Header from "./components/Header";
-import About from "./components/test";
-import { useNavigate } from "react-router-dom";
-import { InitColorSchemeScript } from "@mui/joy/styles";
-import minecraft from "./mine.png";
-import Meme from "./algo"
-import SecretSoundPlayer from "./algo";
-import Inicio from "./components/charts/inicio";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./components/sidebar-others/Sidebar";
+import Header from "./components/sidebar-others/Header";
+import SecretSoundPlayer from "./components/sidebar-others/algo";
 
 const App = () => {
   return (
@@ -35,7 +19,7 @@ const App = () => {
     >
       <Header />
 
-      <Sidebar style={{ cursor: "url(" + minecraft + ", auto)" }} />
+      <Sidebar  />
       <Box
         component="main"
         className="MainContent"

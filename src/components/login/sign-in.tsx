@@ -12,7 +12,7 @@ import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import ColorSchemeToggle from '../ColorSchemeToggle';
+import ColorSchemeToggle from '../sidebar-others/ColorSchemeToggle';
 import { useEffect } from 'react';
 
 // Import the local dark mode image
