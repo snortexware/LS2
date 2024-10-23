@@ -23,7 +23,7 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import Dropdown from "@mui/joy/Dropdown";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
@@ -53,7 +53,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function RowMenu() {
+function RowMenu({ row, onDelete, onEdit }) {
   return (
     <Dropdown>
       <MenuButton
@@ -63,9 +63,11 @@ function RowMenu() {
         <DriveFileRenameOutlineIcon />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
-        <MenuItem>Editar</MenuItem>
+        <MenuItem onClick={() => onEdit(row)}>Editar</MenuItem>
         <Divider />
-        <MenuItem color="danger">Deletar</MenuItem>
+        <MenuItem onClick={() => onDelete(row.id)} color="danger">
+          Deletar
+        </MenuItem>
       </Menu>
     </Dropdown>
   );
@@ -89,11 +91,35 @@ export default function TableInstalacao() {
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
   const [rows, setRows] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [currentRow, setCurrentRow] = useState(null);
+  const [nextId, setNextId] = useState(1);
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
   const handleSave = (pedido) => {
-    setRows([...rows, pedido]);
+    if (editMode) {
+      const updatedRows = rows.map((row) =>
+        row.id === currentRow.id ? { ...pedido, ...currentRow } : row
+      );
+      setRows(updatedRows);
+    } else {
+      const newEntry = { ...pedido, id: nextId };
+      setRows([...rows, newEntry]);
+      setNextId(nextId + 1);
+    }
+
+    setEditMode(false); // EditMode em falso para criação de nova ROw
     setHandleAbrir(false);
+    setCurrentRow(null);
+  };
+
+  const handleEdit = (row) => {
+    setCurrentRow(row);
+    setHandleAbrir(true);
+    setEditMode(true);
+  };
+  const handleDelete = (id) => {
+   setRows(rows.filter((row) => row.id !== id))
   };
 
   const renderFilters = () => (
@@ -128,30 +154,33 @@ export default function TableInstalacao() {
 
   return (
     <>
-    <Stack direction={"rows"} sx={{
-    justifyContent: "flex-start",
-    alignItems: "center",
-  }} columnGap={1} spacing={3}>
-
-    
-    <Typography level="h2" component="h1">
-              AGENDAMENTO | 
-              
-            </Typography>
-            <motion.div
-       
-        initial={{ opacity: 0, x: -30 }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
+      <Stack
+        direction={"rows"}
+        sx={{
+          justifyContent: "flex-start",
+          alignItems: "center",
         }}
-        animate={{ opacity: 1, x: 0}}
-        exit={{ opacity: 0, x: 50 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        columnGap={1}
+        spacing={3}
       >
-            <Typography level="h4" color="neutral" >INSTALAÇÃO</Typography>
-            </motion.div>
-            </Stack>
+        <Typography level="h2" component="h1">
+          AGENDAMENTO |
+        </Typography>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <Typography level="h4" color="neutral">
+            INSTALAÇÃO
+          </Typography>
+        </motion.div>
+      </Stack>
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -282,7 +311,7 @@ export default function TableInstalacao() {
                 >
                   QTD.
                   <br></br>
-                   instalação
+                  instalação
                 </th>
                 <th
                   style={{
@@ -293,13 +322,13 @@ export default function TableInstalacao() {
                 >
                   Bairro
                 </th>
-                
+
                 <th
-                 style={{
-                  minWidth: 130,
-                  padding: "15px 6px",
-                  textAlign: "center", // Centraliza o texto do cabeçalho
-                }}
+                  style={{
+                    minWidth: 130,
+                    padding: "15px 6px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
+                  }}
                 >
                   Status
                 </th>
@@ -308,23 +337,18 @@ export default function TableInstalacao() {
                     width: 80,
                     padding: "15px 6px",
                     textAlign: "center",
-
                   }}
                 >
                   Ação
                 </th>
               </tr>
-             
             </thead>
             <tbody>
               {[...rows].sort(getComparator(order, "id")).map((row) => (
                 <tr key={row.id}>
                   <td style={{ textAlign: "center" }}>
-                    
-                  
                     <p>{row.nome}</p>
                   </td>
-                  
 
                   <td style={{ textAlign: "center" }}>
                     <p>{row.servico}</p>
@@ -355,23 +379,19 @@ export default function TableInstalacao() {
                     </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.bairro}</p>
-                      </div>
-                  
+                    <div>
+                      <p>{row.bairro}</p>
+                    </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    
-                      <div style={{color:"yellow"}}>
-                        {row.status}
-                      </div>
-
-                      
-                    
+                    <div style={{ color: "yellow" }}>{row.status}</div>
                   </td>
                   <td>
-                  <RowMenu />
+                    <RowMenu
+                      row={row}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
                   </td>
                 </tr>
               ))}
@@ -423,10 +443,10 @@ export default function TableInstalacao() {
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {handleAbrir && (
           <ModalInstalacao
-            onSave={handleSave}
-            sx={{ position: "absolute", zIndex: 1400 }}
-            handleAbrir={handleAbrir}
-            handleClose={fechado}
+          onSave={handleSave}
+          sx={{ position: "absolute", zIndex: 1400 }}
+          initialValues={editMode ? currentRow : {}}
+          handleClose={fechado}
           />
         )}
       </AnimatePresence>

@@ -9,7 +9,7 @@ import { FormControl, Button, Box, Typography, ModalClose } from "@mui/joy";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { debounce } from "lodash";
 
-const ModalTitular = ({ handleClose, onSave }) => {
+const ModalTitular = ({ handleClose, onSave, initialValues = {} }) => {
   const data = new Date();
 
   // Options for formatting the time
@@ -31,14 +31,14 @@ const ModalTitular = ({ handleClose, onSave }) => {
   const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
 
   const [pedido, setPedido] = React.useState({
-    id:"",
+    id: initialValues.id || "",
     user: "Lucas",
-    data: dataHoraFormatada,
-    codigoClienteAntigo: "",
-    clienteAntigo: "",
-    codigoClienteNovo: "",
-    clienteNovo: "",
-    id: "",
+    data: initialValues.data || dataHoraFormatada,
+    codigoClienteAntigo: initialValues.codigoClienteAntigo || "",
+    clienteAntigo: initialValues.clienteAntigo || "",
+    codigoClienteNovo: initialValues.codigoClienteNovo || "",
+    clienteNovo: initialValues.clienteNovo || "",
+    id: initialValues.id || "",
   });
 
   const handleChange = (e) => {

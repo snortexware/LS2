@@ -9,7 +9,7 @@ import { FormControl, Button, Box, Typography, ModalClose } from "@mui/joy";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { debounce } from "lodash";
 
-const ModalPlano = ({ handleClose, onSave }) => {
+const ModalPlano = ({ handleClose, onSave, initialValues = {} }) => {
   const data = new Date();
 
   // Options for formatting the time
@@ -32,15 +32,15 @@ const ModalPlano = ({ handleClose, onSave }) => {
   const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
 
   const [pedido, setPedido] = React.useState({
-    codigo: "",
+    codigo: initialValues.codigo || "",
     user: "Lucas",
-    nome: "",
-    data: dataHoraFormatada,
-    clienteAntigo: "0,00",
-    planoAntigo: "",
-    valorNovo: "0,00",
-    planoNovo: "",
-    id: "",
+    nome: initialValues.nome || "",
+    data: initialValues.data || dataHoraFormatada,
+    valorAntigo: initialValues.valorAntigo || "0,00",
+    planoAntigo: initialValues.planoAntigo || "",
+    valorNovo: initialValues.valorNovo || "0,00",
+    planoNovo: initialValues.planoNovo || "",
+    id: initialValues.id || "",
   });
 
   const HandleDebouncedChange = debounce((name, value) => {

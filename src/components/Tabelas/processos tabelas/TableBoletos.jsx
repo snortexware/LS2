@@ -53,7 +53,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function RowMenu() {
+function RowMenu({row, onEdit, onDelete}) {
   return (
     <Dropdown>
       <MenuButton
@@ -63,9 +63,9 @@ function RowMenu() {
         <DriveFileRenameOutlineIcon />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
-        <MenuItem>Editar</MenuItem>
+        <MenuItem onClick={()=> onEdit(row)}>Editar</MenuItem>
         <Divider />
-        <MenuItem color="danger">Deletar</MenuItem>
+        <MenuItem onClick={() => onDelete(row.id)}color="danger">Deletar</MenuItem>
       </Menu>
     </Dropdown>
   );
@@ -88,14 +88,38 @@ export default function TableBoletos() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [nextId, setNextId] = useState(1);
+  const [currentRow, setCurrentRow] = useState(null);
   const [rows, setRows] = useState([]);
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
   const handleSave = (pedido) => {
-    setRows([...rows, pedido]);
-    setHandleAbrir(false);
+    if(editMode){
+    const updatedRows = rows.map((row)=> row.id === currentRow.id ? {...currentRow, ...pedido} : row);
+    setRows(updatedRows);
+  } else {
+    const newEntry = {...pedido, id: nextId}
+    setRows([...rows, newEntry])
+    setNextId(nextId + 1);
+  }
 
-  };
+  setEditMode(false);
+  setHandleAbrir(false);
+  setCurrentRow(null);
+  }
+
+const handleEdit = (row) => {
+  setCurrentRow(row);
+  setEditMode(true);
+  setHandleAbrir(true);
+};
+
+const handleDelete = (id) => {
+  setRows(rows.filter((row) => row.id !== id));
+};
+
+
 
   const renderFilters = () => (
     <React.Fragment>
@@ -339,7 +363,9 @@ export default function TableBoletos() {
                   
 
                   <td style={{ minWidth: 90, textAlign: "center" }}>
-                    <p>{row.codigo}</p>
+                    <p><Typography color="success" level="title-md" noWrap>
+                      {row.codigo}
+                    </Typography></p>
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <p>{row.nome}</p>
@@ -376,7 +402,7 @@ export default function TableBoletos() {
                   </td>
                   <td style={{ textAlign: "center" }}>
                     
-                    <RowMenu />
+                    <RowMenu onDelete={handleDelete} onEdit={handleEdit} row={row}/>
 
   
                   </td>
@@ -433,7 +459,7 @@ export default function TableBoletos() {
           <ModalBoletos
             onSave={handleSave}
             sx={{ position: "absolute", zIndex: 1400 }}
-            handleAbrir={handleAbrir}
+            initialValues={editMode ? currentRow : {}}
             handleClose={fechado}
           />
         )}

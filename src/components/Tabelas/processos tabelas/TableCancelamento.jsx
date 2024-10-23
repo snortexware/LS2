@@ -54,7 +54,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function RowMenu() {
+function RowMenu({row, onDelete, onEdit}) {
   return (
     <Dropdown>
       <MenuButton
@@ -64,9 +64,9 @@ function RowMenu() {
         <DriveFileRenameOutlineIcon />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
-        <MenuItem>Editar</MenuItem>
+        <MenuItem onClick={() => onEdit(row)}>Editar</MenuItem>
         <Divider />
-        <MenuItem color="danger">Deletar</MenuItem>
+        <MenuItem onClick={() => onDelete(row.id)}color="danger">Deletar</MenuItem>
       </Menu>
     </Dropdown>
   );
@@ -90,12 +90,38 @@ export default function TableCancelamento() {
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
   const [rows, setRows] = useState([]);
+  const [currentRow, setCurrentRow] = useState(null);
+  const [nextId, setNextId] = useState(1);
+  const [editMode, setEditMode] = useState(false);
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
-  const handleSave = (pedido) => {
-    setRows([...rows, pedido]);
-    setHandleAbrir(false);
 
+  const handleSave = (pedido) => {
+    if (editMode) {
+      const updatedRows = rows.map((row) =>
+        row.id === currentRow.id ? { ...currentRow, ...pedido } : row
+      );
+      setRows(updatedRows);
+    } else {
+      const newEntry = { ...pedido, id: nextId };
+      setRows([...rows, newEntry]);
+      setNextId(nextId + 1);
+      
+    }
+
+    setEditMode(false);
+    setHandleAbrir(false);
+    setCurrentRow(null);
+  };
+
+  const handleEdit = (row) => {
+    setCurrentRow(row);
+    setEditMode(true);
+    setHandleAbrir(true);
+  };
+
+  const handleDelete = (id) => {
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   const renderFilters = () => (
@@ -329,7 +355,9 @@ export default function TableCancelamento() {
                   
 
                   <td style={{ minWidth: 90, textAlign: "center" }}>
-                    <p>{row.codigo}</p>
+                    <p><Typography color="success" level="title-md" noWrap>
+                      {row.codigo}
+                    </Typography></p>
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <p>{row.nome}</p>
@@ -363,8 +391,12 @@ export default function TableCancelamento() {
                   </td>
                   <td style={{ textAlign: "center" }}>
                     
-                    <RowMenu />
-
+                    <RowMenu
+                    row={row} 
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}/>
+                    
+                    
   
                   </td>
                  
@@ -420,7 +452,7 @@ export default function TableCancelamento() {
           <ModalCancelamento
             onSave={handleSave}
             sx={{ position: "absolute", zIndex: 1400 }}
-            handleAbrir={handleAbrir}
+            initialValues={editMode ? currentRow : {}}
             handleClose={fechado}
           />
         )}

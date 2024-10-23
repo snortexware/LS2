@@ -15,24 +15,24 @@ import Option from "@mui/joy/Option";
 import Textarea from "@mui/joy/Textarea";
 import moment from 'moment';
 
-const ModalInstalacao = ({ handleClose, onSave }) => {
+const ModalInstalacao = ({ handleClose, onSave, initialValues={} }) => {
   
   const [status, setStatus] = React.useState("Processando");
   const [pedido, setPedido] = React.useState({
-    codigo: '',
-    nome: '',
-    data: '',
-    periodo: '',
-    cidade: '',
-    bairro: '',
-    comentario: '',
-    id:'',
-    ponto: '',
-    servico: '',
-    tecnico: '',
-    auxiliar: '',
-    status: status,
-  });
+    codigo: initialValues.codigo || '',
+    nome: initialValues.nome || '',
+    data: initialValues.data || '',
+    periodo: initialValues.periodo || '',
+    cidade: initialValues.cidade || '',
+    bairro: initialValues.bairro || '',
+    comentario: initialValues.comentario || '',
+    id: initialValues.id || '',
+    ponto: initialValues.ponto || '',
+    servico: initialValues.servico || '',
+    tecnico: initialValues.tecnico || '',
+    auxiliar: initialValues.auxiliar || '',
+    status: initialValues.status || status,
+  })
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,18 +51,18 @@ const ModalInstalacao = ({ handleClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(pedido); 
-    handleClose();
+    onSave(pedido); // Passa os dados para o componente pai
+    handleClose(); // Fecha o modal
   };
   
   const formattedDate = moment(pedido.data).format('DD/MM/YYYY');
   const today = new Date().toISOString().split("T")[0];
 
- 
+  // Prevent body from scrolling when modal is open
   React.useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto'; // Restore overflow when modal is closed
     };
   }, []);
 
@@ -74,13 +74,13 @@ const ModalInstalacao = ({ handleClose, onSave }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
-        style={{ position: 'relative', zIndex: 1300 }} 
+        style={{ position: 'relative', zIndex: 1300 }} // Ensure the modal is above other content
       >
         <ModalDialog
           sx={{
-            overflow: 'auto', 
-            maxWidth: '90vw', 
-            maxHeight: '90vh',
+            overflow: 'auto', // Allow scrolling if content is too large
+            maxWidth: '90vw', // Adjust as needed
+            maxHeight: '90vh', // Adjust as needed
             p: 3,
             bgcolor: 'background.paper',
           }}
@@ -89,7 +89,7 @@ const ModalInstalacao = ({ handleClose, onSave }) => {
           <form onSubmit={handleSubmit}>
             <Stack spacing={4} sx={{ mt: 0 }}>
               <Typography endDecorator={<ScheduleIcon />}>
-                Cadastrar INSTALAÇÃO
+                {initialValues.id ? "Editar INSTALAÇÃO" : "Cadastrar INSTALAÇÃO"}
               </Typography>
               <Stack direction="row" spacing={2}>
                 <FormLabel>Segundo Ponto/Cabeamento:</FormLabel>

@@ -152,7 +152,7 @@ export default function Sidebar() {
         
         transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-            <img src={logotema === 0 ? logoWH : logoBK} alt="Logo" />
+            <img style={{justifyContent:"center", width: "170px"}}src={logotema === 0 ? logoWH : logoBK} alt="Logo" />
           </motion.div>
         </IconButton>
         <ColorSchemeToggle

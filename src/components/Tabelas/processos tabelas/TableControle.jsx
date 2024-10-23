@@ -53,7 +53,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function RowMenu() {
+function RowMenu({row, onEdit, onDelete}) {
   return (
     <Dropdown>
       <MenuButton
@@ -63,9 +63,9 @@ function RowMenu() {
         <DriveFileRenameOutlineIcon />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
-        <MenuItem>Editar</MenuItem>
+        <MenuItem onClick={() => onEdit(row)}>Editar</MenuItem>
         <Divider />
-        <MenuItem color="danger">Deletar</MenuItem>
+        <MenuItem onClick={() => onEdit(row.id)} color="danger">Deletar</MenuItem>
       </Menu>
     </Dropdown>
   );
@@ -89,12 +89,31 @@ export default function OrderTable() {
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
   const [rows, setRows] = useState([]);
+  const [nextId, setNextId] = useState(1);
+  const [currentRow, setCurrentRow] = useState(null);
+  const [editMode, setEditMode] = useState(false);
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
   const handleSave = (pedido) => {
-    setRows([...rows, pedido]);
-    setHandleAbrir(false);
-  };
+    if(editMode){
+      const updatedRow = rows.map((row) => row.id === currentRow.id ? {...currentRow, ... pedido} : row )
+      setRows(updateRow)
+  } else {
+    const newEntry = { ...pedido, id: nextId}
+    setRows([...pedido, newEntry])
+    setNextId(nextId + 1);
+  }
+
+  const handleEdit = (row) => {
+    setCurrentRow(row)
+    setEditMode(true);
+    setHandleAbrir(true);
+  }
+  const handleDelete = (id) =>{
+    setRows(rows.filter((row)=> row.id !== id))
+  }
+
+  
 
   const renderFilters = () => (
     <React.Fragment>
@@ -339,7 +358,11 @@ export default function OrderTable() {
                     
                   </td>
                   <td>
-                  <RowMenu />
+                  <RowMenu  
+                    row={row}
+                     onDelete={handleDelete}
+                     onEdit={handleEdit}
+                     />
                   </td>
                 </tr>
               ))}
@@ -400,4 +423,4 @@ export default function OrderTable() {
       </AnimatePresence>
     </>
   );
-}
+}}

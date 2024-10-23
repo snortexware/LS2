@@ -1,7 +1,4 @@
-import {
-  motion,
-  AnimatePresence
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Backdrop from "./backdrop";
 import Table from "@mui/joy/Table";
 import Textarea from "@mui/joy/Textarea";
@@ -17,65 +14,49 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import TextField from "@mui/joy/TextField";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
-import moment from 'moment';
+import moment from "moment";
 
-
-const BasicModalDialog = ({ handleClose, onSave }) => {
-  
+const BasicModalDialog = ({ handleClose, onSave, initialValues = {} }) => {
+  const formattedDate = moment(initialValues.data).format("DD/MM/YYYY");
+  const today = new Date().toISOString().split("T")[0];
 
   const [pedido, setPedido] = React.useState({
-    codigo: '',
-    nome: '',
-    data: '',
-    periodo: '',
-    cidade: '',
-    bairro: '',
-    comentario: '',
-    id:'',
-    
+    codigo: initialValues.codigo || "",
+    nome: initialValues.nome || "",
+    data: initialValues.data || formattedDate,
+    periodo: initialValues.periodo || "",
+    cidade: initialValues.cidade || "",
+    bairro: initialValues.bairro || "",
+    comentario: initialValues.comentario || "",
+    id: initialValues.id || "",
   });
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPedido({
       ...pedido,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSelectChange = (name, value) => {
     setPedido((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const novoPedido = {
-      id: `INV-${Math.floor(Math.random() * 10000)}`, // Gera um ID aleatório para o pedido
-      date: formattedDate,
-      periodo: pedido.periodo,
-        codigo: pedido.codigo,
-        name: pedido.nome,
-        bairro: pedido.bairro,
-        cidade: pedido.cidade,
-        comentario: pedido.comentario,
-      
-    };
- 
-    onSave(novoPedido); // Passa os dados para o componente pai
+    onSave(pedido); // Passa os dados para o componente pai
     handleClose(); // Fecha o modal
   };
-  
-  const formattedDate = moment(pedido.data).format('DD/MM/YYYY');
-  const today = new Date().toISOString().split("T")[0];
-  console.log(pedido)
+
+  console.log(pedido);
   return (
     <Backdrop onClick={handleClose}>
       <motion.div
-       
         onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -83,10 +64,17 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
         transition={{ duration: 0.2, ease: "easeInOut" }}
       >
         <Stack spacing={3} sx={{ minWidth: 600 }}>
-          <ModalDialog sx={{overflow: 'auto', maxnWidth: '400px', p: 3, bgcolor: 'background.paper'  }}>
+          <ModalDialog
+            sx={{
+              overflow: "auto",
+              maxnWidth: "400px",
+              p: 3,
+              bgcolor: "background.paper",
+            }}
+          >
             <ModalClose onClick={handleClose} />
             <Typography endDecorator={<ScheduleIcon />}>
-              Cadastrar SUPORTE
+              {editMode ? "Cadastrar INSTALAÇÃO" : "Editar INSTALAÇÃO"}
             </Typography>
 
             <form onSubmit={handleSubmit}>
@@ -105,10 +93,11 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                     onChange={handleChange}
                     sx={{
                       width: 80,
-                      "& input::-webkit-inner-spin-button, & input::-webkit-outer-spin-button": {
-                        WebkitAppearance: "none",
-                        margin: 0,
-                      },
+                      "& input::-webkit-inner-spin-button, & input::-webkit-outer-spin-button":
+                        {
+                          WebkitAppearance: "none",
+                          margin: 0,
+                        },
                       "& input[type='number']": {
                         MozAppearance: "textfield",
                         appearance: "textfield",
@@ -141,7 +130,9 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                       slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
                       name="periodo"
                       value={pedido.periodo}
-                      onChange={(e, value) => handleSelectChange("periodo", value)}
+                      onChange={(e, value) =>
+                        handleSelectChange("periodo", value)
+                      }
                     >
                       <Option value="Dia Todo">Dia Todo</Option>
                       <Option value="Manhã">Manhã</Option>
@@ -178,7 +169,9 @@ const BasicModalDialog = ({ handleClose, onSave }) => {
                       slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
                       name="cidade"
                       value={pedido.cidade}
-                      onChange={(e, value) => handleSelectChange("cidade", value)}
+                      onChange={(e, value) =>
+                        handleSelectChange("cidade", value)
+                      }
                     >
                       <Option value="Gaspar">Gaspar</Option>
                       <Option value="Blumenau">Blumenau</Option>

@@ -8,11 +8,11 @@ import BlockIcon from '@mui/icons-material/Block';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import {Link as RouterLink} from "react-router-dom"
-
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 
 export default function CardInvertedColors() {
   return (
-    <Stack alignContent={"center"} sx={{ minWidth: "30vh", maxWidth: "100%"}} direction={"row"} spacing={5}>
+    <Stack alignContent={"flex-end"} sx={{ minWidth: "30vh", maxWidth: "100%"}} direction={"row"} spacing={7}>
       
       <Card
   component={RouterLink}
@@ -32,7 +32,7 @@ export default function CardInvertedColors() {
   <CardContent orientation="vertical">
     <CardContent>
       <Stack alignItems="center" spacing={1}>
-        <RouterIcon sx={{minWidth: "5vh", maxWidth: "10vh", minHeight: "5vh", maxHeight: "10vh",}} />
+        <RouterIcon sx={{minWidth: "4.5vh", maxWidth: "10vh", minHeight: "5vh", maxHeight: "10vh",}} />
         <Typography sx={{fontSize:"auto"}}  level="body-lg">
           Instalações
         </Typography>
@@ -53,7 +53,7 @@ export default function CardInvertedColors() {
       <CardContent orientation="vertical" sx={{alignItems: 'center',justifyContent: "center"}}>
         <CardContent>
           <Stack  alignItems="center" spacing={1}>
-            <BlockIcon/>
+            <BlockIcon sx={{minWidth: "4.5vh", maxWidth: "10vh", minHeight: "5vh", maxHeight: "10vh",}}/>
           <Typography level="body-md">Cancelamentos</Typography>
           </Stack>
           <Typography level="h2" sx={{ alignItems: 'center', justifyContent: "center"}}>50</Typography>
@@ -70,7 +70,7 @@ export default function CardInvertedColors() {
         
         <CardContent>
         <Stack  alignItems="center" spacing={1}>
-            <ConstructionIcon/>
+            <ConstructionIcon sx={{minWidth: "4.5vh", maxWidth: "10vh", minHeight: "5vh", maxHeight: "10vh",}} />
           <Typography level="body-lg">Manutenções</Typography>
           </Stack>
           <Typography level="h2">30</Typography>
@@ -87,7 +87,7 @@ export default function CardInvertedColors() {
         <CardContent>
         
         <Stack  alignItems="center"spacing={1}>
-        <SyncAltIcon/>
+        <SyncAltIcon sx={{minWidth: "4.5vh", maxWidth: "10vh", minHeight: "5vh", maxHeight: "10vh",}}/>
           <Typography level="body-md">Mudanças de Plano</Typography>
           </Stack>
           <Typography level="h2">10</Typography>
@@ -102,7 +102,7 @@ export default function CardInvertedColors() {
       <CardContent orientation="vertical">
         <CardContent>
         <Stack  alignItems="center"spacing={1}>
-        <SyncAltIcon/>
+        <ChangeCircleIcon sx={{minWidth: "4.5vh", maxWidth: "10vh", minHeight: "5vh", maxHeight: "10vh",}}/>
           <Typography level="body-md">Mudanças de Titularidade</Typography>
           </Stack>
           <Typography level="h2">10</Typography>

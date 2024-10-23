@@ -28,18 +28,18 @@ const Inicio = () => {
 
     return (
         
-        <div style={{}}>
-            <Box sx={{
-                size: "auto",
-    position: "auto",
-    minWidth: "60%", maxWidth: "90%"
+        
+            <Box alignItems={"center"}sx={{
+                
+                flexDirection: "column",
+    
 }}>
             <Stack alignItems="center" direction={"column"} spacing={3}>
                 <Typography level="h1" style={{height: '2em' }}>
                     <Typewriter text={saudacao + " " + user.dev} delay={40} />
                 </Typography>
                 <CardInvertedColors />
-                <Stack alignItems="center" spacing={3} direction="row">
+                <Stack alignItems="center" spacing={7} direction="row">
                 <PieChart/>
                 <MultiAxisLineChart />
             </Stack>
@@ -47,7 +47,7 @@ const Inicio = () => {
            
 
             </Box>
-            </div>
+          
          
     );
 }

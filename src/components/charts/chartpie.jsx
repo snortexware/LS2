@@ -47,7 +47,7 @@ const PieChart = () => {
   };
 
   return (
-    <Box sx={{minWidth: "30vw", maxWidth: "30vw", minHeight: "25vh", maxHeight: "30vh"}}>
+    <Box sx={{ minWidth: "35vw", maxWidth: "30vw", minHeight: "25vh", maxHeight: "25vh"}}>
       <Pie data={data} options={options} />
     </Box>
   );

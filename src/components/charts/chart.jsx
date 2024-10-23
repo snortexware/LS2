@@ -148,7 +148,7 @@ const MultiAxisLineChart = () => {
   };
 
   return (
-    <Box  sx={{minWidth: "35vw", maxWidth: "35vw", minHeight: "40vh", maxHeight: "30vh"}} >
+    <Box aligItems={"center"} sx={{minWidth: "37vw", maxWidth: "35vw", minHeight: "40vh", maxHeight: "30vh"}} >
      
       <Line data={data} options={options} />
     </Box>

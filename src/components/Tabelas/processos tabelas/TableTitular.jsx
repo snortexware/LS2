@@ -88,10 +88,10 @@ export default function TableTitular() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [currentRow, setCurrentRow] = useState(null);
-  const [rows, setRows] = useState([]);
-  const [nextId, setNextId] = useState(1);
+  const [editMode, setEditMode] = useState(false); // função que recebe falso como valor inicial
+  const [currentRow, setCurrentRow] = useState(null);  // valor que recebe a row atual
+  const [rows, setRows] = useState([]); // variavel que recebe as rows do modal
+  const [nextId, setNextId] = useState(1); // variavel para setar nova ID na row
 
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
@@ -107,6 +107,7 @@ export default function TableTitular() {
       setRows([...rows, newEntry]);
       setNextId(nextId + 1);
     }
+    
     setHandleAbrir(false);
     setEditMode(false);
     setCurrentRow(null);

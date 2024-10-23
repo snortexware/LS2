@@ -23,7 +23,7 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import Dropdown from "@mui/joy/Dropdown";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
@@ -36,7 +36,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import ModalPlano from "../../modals/modalPlano";
 import Stack from "@mui/joy/Stack";
 import MenuOpen from "@mui/icons-material/MenuOpen";
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -54,7 +53,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function RowMenu() {
+function RowMenu({ row, onEdit, onDelete }) {
   return (
     <Dropdown>
       <MenuButton
@@ -64,9 +63,11 @@ function RowMenu() {
         <DriveFileRenameOutlineIcon />
       </MenuButton>
       <Menu size="sm" sx={{ minWidth: 140 }}>
-        <MenuItem>Editar</MenuItem>
+        <MenuItem onClick={() => onEdit(row)}>Editar</MenuItem>
         <Divider />
-        <MenuItem color="danger">Deletar</MenuItem>
+        <MenuItem onClick={() => onDelete(row.id)} color="danger">
+          Deletar
+        </MenuItem>
       </Menu>
     </Dropdown>
   );
@@ -89,13 +90,40 @@ export default function TablePlano() {
   const [order, setOrder] = useState("desc");
   const [selected, setSelected] = useState([]);
   const [handleAbrir, setHandleAbrir] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [nextId, setNextId] = useState(1);
+  const [currentRow, setCurrentRow] = useState(null);
   const [rows, setRows] = useState([]);
   const aberto = () => setHandleAbrir(true);
   const fechado = () => setHandleAbrir(false);
   const handleSave = (pedido) => {
-    setRows([...rows, pedido]);
-    setHandleAbrir(false);
+    if (editMode) {
+      //Verifica se o editmode está true mapea array
+      //checa se a row condiz com a atual e seta
+      const updatedRows = rows.map((row) =>
+        row.id === currentRow.id ? { ...currentRow, ...pedido } : row
+      );
+      setRows(updatedRows);
+    } else {
+      const newEntry = { ...pedido, id: nextId };
+      setRows([...rows, newEntry]);
+      setNextId(nextId + 1);
+      
+    }
 
+    setEditMode(false);
+    setHandleAbrir(false);
+    setCurrentRow(null);
+  };
+
+  const handleEdit = (row) => {
+    setCurrentRow(row);
+    setEditMode(true);
+    setHandleAbrir(true);
+  };
+
+  const handleDelete = (id) => {
+    setRows(rows.filter((row) => row.id !== id));
   };
 
   const renderFilters = () => (
@@ -127,33 +155,36 @@ export default function TablePlano() {
       </Box>
     </React.Fragment>
   );
-  
+
   return (
     <>
-    <Stack direction={"rows"} sx={{
-    justifyContent: "flex-start",
-    alignItems: "center",
-  }} columnGap={1} spacing={3}>
-
-    
-    <Typography level="h2" component="h1">
-              MUDANÇA | 
-              
-            </Typography>
-            <motion.div
-       
-        initial={{ opacity: 0, x: -30 }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
+      <Stack
+        direction={"rows"}
+        sx={{
+          justifyContent: "flex-start",
+          alignItems: "center",
         }}
-        animate={{ opacity: 1, x: 0}}
-        exit={{ opacity: 0, x: 50 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        columnGap={1}
+        spacing={3}
       >
-            <Typography level="h4" color="neutral" >DE PLANO</Typography>
-            </motion.div>
-            </Stack>
+        <Typography level="h2" component="h1">
+          MUDANÇA |
+        </Typography>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <Typography level="h4" color="neutral">
+            DE PLANO
+          </Typography>
+        </motion.div>
+      </Stack>
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -237,7 +268,7 @@ export default function TablePlano() {
           >
             <thead>
               <tr>
-              <th
+                <th
                   style={{
                     whiteSpace: "normal",
                     minWidth: 20,
@@ -246,7 +277,7 @@ export default function TablePlano() {
                   }}
                 >
                   Codigo
-                  <br></br> 
+                  <br></br>
                   Cliente
                 </th>
                 <th
@@ -254,17 +285,12 @@ export default function TablePlano() {
                     whiteSpace: "normal",
                     minWidth: 150,
                     padding: "20px 5px",
-                    textAlign: "center", 
+                    textAlign: "center",
                   }}
                 >
                   Nome
                 </th>
-                
-               
-              
-             
-               
-                
+
                 <th
                   style={{
                     minWidth: 150,
@@ -275,9 +301,9 @@ export default function TablePlano() {
                 >
                   Plano
                   <br></br>
-                   Antigo
+                  Antigo
                 </th>
-                
+
                 <th
                   style={{
                     minWidth: 150,
@@ -288,9 +314,9 @@ export default function TablePlano() {
                 >
                   Valor
                   <br></br>
-                   Antigo
+                  Antigo
                 </th>
-                
+
                 <th
                   style={{
                     minWidth: 150,
@@ -300,10 +326,10 @@ export default function TablePlano() {
                   }}
                 >
                   Plano
-                  <br></br> 
-                   Novo
+                  <br></br>
+                  Novo
                 </th>
-                
+
                 <th
                   style={{
                     minWidth: 150,
@@ -314,16 +340,15 @@ export default function TablePlano() {
                 >
                   Valor
                   <br></br>
-                   novo
+                  novo
                 </th>
-              
-                
+
                 <th
-                 style={{
-                  minWidth: 130,
-                  padding: "20px 6px",
-                  textAlign: "center", // Centraliza o texto do cabeçalho
-                }}
+                  style={{
+                    minWidth: 130,
+                    padding: "20px 6px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
+                  }}
                 >
                   Status
                 </th>
@@ -337,7 +362,7 @@ export default function TablePlano() {
                 >
                   Cadastrado
                   <br></br>
-                   Por
+                  Por
                 </th>
                 <th
                   style={{
@@ -349,90 +374,76 @@ export default function TablePlano() {
                 >
                   Data/Hora
                   <br></br>
-                    Cadastro	
+                  Cadastro
                 </th>
                 <th
                   style={{
                     width: 70,
                     padding: "20px 6px",
                     textAlign: "center",
-
                   }}
                 >
                   Ação
                 </th>
-              
               </tr>
-             
             </thead>
             <tbody>
               {[...rows].sort(getComparator(order, "id")).map((row) => (
                 <tr key={row.id}>
-                
-                  
-
                   <td style={{ minWidth: 50, textAlign: "center" }}>
-                    <p>{row.codigo}</p>
+                    <p><Typography color="success" level="title-md" noWrap>
+                      {row.codigo}
+                    </Typography></p>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <p>{row.nome}</p>
+                    <p style={{ fontWeight: 650}}>
+                      {row.nome}
+                      </p>
                   </td>
-                 
+
                   <td style={{ textAlign: "center" }}>
                     <div>
                       <p>{row.planoAntigo}</p>
                     </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.valorAntigo}</p>
-                      </div>
-                  
+                    <div>
+                      <p>{row.valorAntigo}</p>
+                    </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.planoNovo}</p>
-                      </div>
-                  
+                    <div>
+                      <p>{row.planoNovo}</p>
+                    </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.valorNovo}</p>
-                      </div>
-                  
+                    <div>
+                      <p>{row.valorNovo}</p>
+                    </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.status}</p>
-                      </div>
-                  
+                    <div>
+                      <p>{row.status}</p>
+                    </div>
                   </td>
-                  
-                  <td style={{ lineBreak: "auto",textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.user}</p>
-                      </div>
-                  
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.data}</p>
-                      </div>
-                  
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    
-                    <RowMenu />
 
-  
+                  <td style={{ lineBreak: "auto", textAlign: "center" }}>
+                    <div>
+                      <p>{row.user}</p>
+                    </div>
                   </td>
-                 
+                  <td style={{ textAlign: "center" }}>
+                    <div>
+                      <p>{row.data}</p>
+                    </div>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    <RowMenu
+                      row={row}
+                      onDelete={handleDelete}
+                      onEdit={handleEdit}
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -485,7 +496,7 @@ export default function TablePlano() {
           <ModalPlano
             onSave={handleSave}
             sx={{ position: "absolute", zIndex: 1400 }}
-            handleAbrir={handleAbrir}
+            initialValues={editMode ? currentRow : {}}
             handleClose={fechado}
           />
         )}

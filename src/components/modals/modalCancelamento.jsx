@@ -20,7 +20,7 @@ import Option from "@mui/joy/Option";
 import moment from 'moment';
 import { Rowing } from "@mui/icons-material";
 
-const ModalCancelamento = ({ handleClose, onSave }) => {
+const ModalCancelamento = ({ handleClose, onSave, initialValues = {}                                                          }) => {
   const data = new Date();
 
 // Options for formatting the time
@@ -47,17 +47,16 @@ console.log('Hora formatada:', horaFormatada);
 
 const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
   const [status, setStatus] = React.useState("Processando")
-  const [pedido, setPedido] = React.useState({
-    codigo: '',
-    user: '',
-    nome: '',
-    data: dataHoraFormatada,
-    motivo: '',
-    mes: '',
-    bairro: '',
-    id:'',
-    status: status,
-    
+const [pedido, setPedido] = React.useState({
+    codigo: initialValues.codigo || '',
+    user: initialValues.user || '',
+    nome: initialValues.nome || '',
+    data: initialValues.data || dataHoraFormatada,
+    motivo: initialValues.motivo || '',
+    mes: initialValues.mes || '',
+    bairro: initialValues.bairro || '',
+    id: initialValues.id || '',
+    status: initialValues.status || status,
   });
   
   const handleChange = (e) => {
@@ -68,12 +67,7 @@ const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
     });
   };
 
-  const handleSelectChange = (name, value) => {
-    setPedido((prevState) => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -108,9 +102,9 @@ const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
           <ModalDialog sx={{overflow: 'auto', minWidth: '400px', p: 3, bgcolor: 'background.paper'  }}>
             <ModalClose onClick={handleClose} />
             <Typography endDecorator={<ScheduleIcon />}>
-              Cadastrar CANCELAMENTO
+            {initialValues.id ? "Editar CANCELAMENTO" : "Cadastrar CANCELAMENTO"}
             </Typography>
-
+            
             <form onSubmit={handleSubmit}>
               <Stack spacing={4.5} sx={{ mt: 2 }}>
                 <Stack direction="row" spacing={2} sx={{ height: 35 }}>
@@ -162,7 +156,7 @@ const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
                     size="sm"
                     required
                     placeholder="Digite o Motivo"
-                    name="Motivo"
+                    name="motivo"
                     value={pedido.motivo}
                     onChange={handleChange}
                   />
