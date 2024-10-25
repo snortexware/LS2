@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import CssBaseline from '@mui/joy/CssBaseline';
@@ -12,23 +12,45 @@ import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import ColorSchemeToggle from '../sidebar-others/ColorSchemeToggle';
-import { useEffect } from 'react';
-
-// Import the local dark mode image
-;
+import { useNavigate } from 'react-router-dom'; // To handle redirection
+import ColorSchemeToggle from '../sidebar-others/ColorSchemeToggle'; // Assuming you have this component
 
 function SignInForm() {
-  const { mode } = useColorScheme(); // Now within the CssVarsProvider context
-  const [logo, setLogo] = React.useState("");
-  const darkBackground = require('../assets/dark.jpg')
-  const lightBackground = require('../assets/dark.jpg')
-  // Update logo based on the current theme
+  const { mode } = useColorScheme();
+  const navigate = useNavigate(); // For redirection to home
+
+  const [email, setEmail] = useState(""); // Store the email input
+  const [password, setPassword] = useState(""); // Store the password input
+  const [error, setError] = useState(""); // Error message state
+  const [logo, setLogo] = useState(""); // Store the logo based on theme
+
+  const darkBackground = require('../assets/dark.jpg');
+  const lightBackground = require('../assets/dark.jpg');
+
+  // Preset login credentials (simulated credentials)
+  const presetEmail = "teste@test.com";
+  const presetPassword = "123456";
+
+  // Automatically update the logo based on the current theme
   useEffect(() => {
     const logoDark = require('../assets/logo.png');
     const logoLight = require('../assets/logo2.png');
     setLogo(mode === 'dark' ? logoDark : logoLight);
   }, [mode]);
+
+  // Handle form submission and simulate login
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Check credentials
+    if (email === presetEmail && password === presetPassword) {
+      // Simulate login and redirect to home page "/"
+      navigate('/');
+    } else {
+      // Show error if credentials are incorrect
+      setError("Invalid email or password");
+    }
+  };
 
   return (
     <>
@@ -37,7 +59,7 @@ function SignInForm() {
         styles={{
           ':root': {
             '--Form-maxWidth': '800px',
-            '--Transition-duration': '0.4s', // set to `none` to disable transition
+            '--Transition-duration': '0.4s',
           },
         }}
       />
@@ -78,7 +100,7 @@ function SignInForm() {
             <ColorSchemeToggle />
           </Box>
 
-          {/* Form and other content */}
+          {/* Login form */}
           <Box
             component="main"
             sx={{
@@ -111,28 +133,32 @@ function SignInForm() {
                 </Typography>
               </Stack>
             </Stack>
-            <Divider>or</Divider>
+            <Divider>ou</Divider>
             <Stack sx={{ gap: 4, mt: 2 }}>
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  const formData = new FormData(event.currentTarget);
-                  const data = {
-                    email: "john.c.calhoun@examplepetstore.com",
-                    password: "123456",
-                    persistent: formData.get('persistent') === 'on',
-                  };
-                  alert(JSON.stringify(data, null, 2));
-                }}
-              >
+              <form onSubmit={handleSubmit}>
                 <FormControl required>
                   <FormLabel>Login</FormLabel>
-                  <Input type="email" name="email" />
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Digite seu email"
+                  />
                 </FormControl>
                 <FormControl required>
                   <FormLabel>Senha</FormLabel>
-                  <Input type="password" name="password" />
+                  <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Digite sua senha"
+                  />
                 </FormControl>
+                {error && (
+                  <Typography color="danger" level="body-sm">
+                    {error}
+                  </Typography>
+                )}
                 <Stack sx={{ gap: 4, mt: 2 }}>
                   <Box
                     sx={{
@@ -141,7 +167,7 @@ function SignInForm() {
                       alignItems: 'center',
                     }}
                   >
-                    <Checkbox size="sm" label="Remember me" name="persistent" />
+                    <Checkbox size="sm" label="Lembrar" />
                     <Link level="title-sm" href="#replace-with-a-link">
                       Esqueceu sua senha?
                     </Link>
@@ -162,7 +188,7 @@ function SignInForm() {
         </Box>
       </Box>
 
-      {/* Background Image Box */}
+      {/* Background image box */}
       <Box
         sx={(theme) => ({
           height: '100%',
@@ -178,10 +204,9 @@ function SignInForm() {
             'background-image var(--Transition-duration), left var(--Transition-duration) !important',
           transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
           backgroundRepeat: 'no-repeat',
-          backgroundImage: `url(${darkBackground})`, // Local image for light mode
+          backgroundImage: `url(${darkBackground})`,
           [theme.getColorSchemeSelector('dark')]: {
-            backgroundImage:
-              `url(${lightBackground})`, // Remote image for dark mode
+            backgroundImage: `url(${lightBackground})`,
           },
         })}
       />

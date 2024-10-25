@@ -255,7 +255,7 @@ export default function TableInstalacao() {
                 <th
                   style={{
                     whiteSpace: "normal",
-                    minWidth: 150,
+                    minWidth: 350,
                     padding: "15px 5px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
@@ -264,8 +264,8 @@ export default function TableInstalacao() {
                 </th>
                 <th
                   style={{
-                    minWidth: 150,
-                    padding: "15px 6px",
+                    minWidth: 100,
+                    padding: "15px 1px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
@@ -274,7 +274,7 @@ export default function TableInstalacao() {
                 <th
                   style={{
                     minWidth: 150,
-                    padding: "15px 6px",
+                    padding: "15px 1px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
@@ -282,8 +282,8 @@ export default function TableInstalacao() {
                 </th>
                 <th
                   style={{
-                    minWidth: 100,
-                    padding: "15px 6px",
+                    minWidth: 150,
+                    padding: "15px 1px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
@@ -291,8 +291,8 @@ export default function TableInstalacao() {
                 </th>
                 <th
                   style={{
-                    minWidth: 50,
-                    padding: "10px 6px",
+                    minWidth: 100,
+                    padding: "10px 1px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                     lineBreak: "anywhere",
                   }}
@@ -303,7 +303,7 @@ export default function TableInstalacao() {
                 </th>
                 <th
                   style={{
-                    minWidth: 130,
+                    minWidth: 100,
                     padding: "15px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
@@ -313,7 +313,7 @@ export default function TableInstalacao() {
 
                 <th
                   style={{
-                    minWidth: 130,
+                    minWidth: 150,
                     padding: "15px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
@@ -322,8 +322,8 @@ export default function TableInstalacao() {
                 </th>
                 <th
                   style={{
-                    width: 80,
-                    padding: "15px 6px",
+                    width: 70,
+                    padding: "15px 3px",
                     textAlign: "center",
                   }}
                 >
@@ -334,10 +334,11 @@ export default function TableInstalacao() {
             <tbody>
               {[...rows].sort(getComparator(order, "id")).map((row) => (
                 <tr key={row.id}>
-                  <td style={{ textAlign: "center" }}>
-                    <p>{row.nome}</p>
+                  <td>
+                  <Typography  level="title-sm"style={{ textAlign: "center"}}>
+                    {row.nome}
+                  </Typography>
                   </td>
-
                   <td style={{ textAlign: "center" }}>
                     <p>{row.servico}</p>
                   </td>
@@ -374,7 +375,12 @@ export default function TableInstalacao() {
                   <td style={{ textAlign: "center" }}>
                     <div style={{ color: "yellow" }}>{row.status}</div>
                   </td>
-                  <td>
+                  <td style={{
+                    width: 80,
+                    padding: "20px 3px",
+                    textAlign: "center",
+
+                  }}>
                     <RowMenu
                       row={row}
                       onEdit={handleEdit}

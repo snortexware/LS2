@@ -6,6 +6,8 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./components/sidebar-others/Sidebar";
 import Header from "./components/sidebar-others/Header";
 import SecretSoundPlayer from "./components/sidebar-others/algo";
+import MyProfile from "./components/login-profile/profile/MyProfile";
+
 
 const App = () => {
   return (
@@ -14,46 +16,34 @@ const App = () => {
     <Box
       sx={{
         display: "flex",
-        minHeight: "100dvh",
+        justifyContent: "center",
+        
+        gap: 0
       }}
     >
       <Header />
 
       <Sidebar  />
-      <Box
+      
+        <Box
         component="main"
         className="MainContent"
         sx={{
           px: { xs: 2, md: 6 },
-          pt: {
-            xs: "calc(12px + var(--Header-height))",
-            sm: "calc(12px + var(--Header-height))",
-            md: 3,
-          },
+          pt: { xs: "calc(12px + var(--Header-height))", sm: "calc(12px + var(--Header-height))", md: 3 },
           pb: { xs: 2, sm: 2, md: 3 },
           flex: 1,
           display: "flex",
           flexDirection: "column",
           minWidth: 0,
           height: "100dvh",
-          gap: 1,
+          maxWidth: "100%",  // Limit the width
+          gap: 0,
+          overflow: "auto",  // Ensure overflow is managed
         }}
       >
-        <Box
-          sx={{
-            marginBottom: 0,
-            display: "flex",
-            mb: 1,
-            gap: 1,
-            flexDirection: { xs: "column", sm: "row" },
-            alignItems: { xs: "start", sm: "center" },
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-          }}
-        >
-          
-          
-        </Box>
+      
+       
           <SecretSoundPlayer />
           
           

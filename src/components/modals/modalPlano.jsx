@@ -30,7 +30,7 @@ const ModalPlano = ({ handleClose, onSave, initialValues = {} }) => {
   const dataFormatada = data.toLocaleDateString("pt-BR", optionsData);
   const horaFormatada = data.toLocaleTimeString("pt-BR", optionsHora);
   const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
-
+  const [status, setStatus] = React.useState("Processando")
   const [pedido, setPedido] = React.useState({
     codigo: initialValues.codigo || "",
     user: "Lucas",
@@ -41,6 +41,7 @@ const ModalPlano = ({ handleClose, onSave, initialValues = {} }) => {
     valorNovo: initialValues.valorNovo || "0,00",
     planoNovo: initialValues.planoNovo || "",
     id: initialValues.id || "",
+    status: initialValues.status || status
   });
 
   const HandleDebouncedChange = debounce((name, value) => {

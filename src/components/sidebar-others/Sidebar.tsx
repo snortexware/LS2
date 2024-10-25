@@ -22,6 +22,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
+import { useColorScheme } from "@mui/joy";
 
 function Toggler({
   defaultExpanded = false,
@@ -58,18 +59,16 @@ function Toggler({
 }
 
 export default function Sidebar() {
+  const {mode } = useColorScheme();
   const [logotema, setLogoTema] = useState(0);
-  // inicializa a variavel com valor 0
   const logoWH = require("../assets/logo.png");
   const logoBK = require("../assets/logo2.png");
-  // Duas variaveis recebendo o valor do nosso png
   const [trocar, setTrocar] = useState(0);
 
   useEffect(() => {
-    const chave = localStorage.getItem("joy-mode");
-    // Pega o item do local storage do navegador do usuario
-    setLogoTema(chave === "dark" ? 0 : 1);
-  }, [logotema, trocar]);
+   
+    setLogoTema(mode === "dark" ? 0 : 1);
+  }, [mode]);
 
   return (
     <Sheet
@@ -89,7 +88,7 @@ export default function Sidebar() {
         flexShrink: 0,
         display: "flex",
         flexDirection: "column",
-        gap: 2,
+        gap: 3,
         borderRight: "1px solid",
         borderColor: "divider",
       }}
@@ -302,20 +301,21 @@ export default function Sidebar() {
             mt: "auto",
             flexGrow: 0,
             "--ListItem-radius": (theme) => theme.vars.radius.sm,
-            "--List-gap": "8px",
+            "--List-gap": "10px",
             mb: 2,
+           
           }}
         >
-          <ListItem>
-            <ListItemButton>
-              <SupportRoundedIcon />
-              Support
+          <ListItem sx={{ mt: 0.5 }}>
+            <ListItemButton onClick={() => { alert("Não tem xD (ainda)")}}>
+              <SupportRoundedIcon  sx={{ marginRight: 1 }}/>
+              Suporte
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
-              <SettingsRoundedIcon />
-              Settings
+            <ListItemButton component={RouterLink} to="/config">
+              <SettingsRoundedIcon sx={{ marginRight: 1 }} />
+              Configurações
             </ListItemButton>
           </ListItem>
         </List>

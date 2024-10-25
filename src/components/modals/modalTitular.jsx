@@ -29,6 +29,7 @@ const ModalTitular = ({ handleClose, onSave, initialValues = {} }) => {
   const dataFormatada = data.toLocaleDateString("pt-BR", optionsData);
   const horaFormatada = data.toLocaleTimeString("pt-BR", optionsHora);
   const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
+  const [status, setStatus] = React.useState("Processando")
 
   const [pedido, setPedido] = React.useState({
     id: initialValues.id || "",
@@ -39,6 +40,7 @@ const ModalTitular = ({ handleClose, onSave, initialValues = {} }) => {
     codigoClienteNovo: initialValues.codigoClienteNovo || "",
     clienteNovo: initialValues.clienteNovo || "",
     id: initialValues.id || "",
+    status: initialValues.id || status
   });
 
   const handleChange = (e) => {

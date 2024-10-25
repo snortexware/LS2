@@ -11,8 +11,8 @@ import TableBoletos from "./components/Tabelas/processos tabelas/TableBoletos";
 import TableCancelamento from "./components/Tabelas/processos tabelas/TableCancelamento";
 import TablePlano from "./components/Tabelas/processos tabelas/TablePlano";
 import TableTitular from "./components/Tabelas/processos tabelas/TableTitular";
-import JoySignInSideTemplate from "./components/login/sign-in";
-
+import JoySignInSideTemplate from "./components/login-profile/sign-in";
+import JoyOrderDashboardTemplate from "./components/login-profile/profile/MyProfile"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,11 +50,15 @@ const router = createBrowserRouter([
         path: "/mudartitular",
         element: <TableTitular />,
       },
+      {
+        path: "/config",
+        element: <JoyOrderDashboardTemplate />
+      }
     ],
   },
   // Sign-in route defined at the same level as the root path
   {
-    path: "/signin",
+    path: "/entrar",
     element: <JoySignInSideTemplate />,
   },
 ]);

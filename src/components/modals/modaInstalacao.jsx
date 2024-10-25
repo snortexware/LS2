@@ -16,12 +16,12 @@ import Textarea from "@mui/joy/Textarea";
 import moment from 'moment';
 
 const ModalInstalacao = ({ handleClose, onSave, initialValues={} }) => {
-  
+  const dataHoraFormatada = moment(initialValues.data).format('DD/MM/YYYY HH:mm:ss');
   const [status, setStatus] = React.useState("Processando");
   const [pedido, setPedido] = React.useState({
     codigo: initialValues.codigo || '',
     nome: initialValues.nome || '',
-    data: initialValues.data || '',
+    data: initialValues.data || dataHoraFormatada,
     periodo: initialValues.periodo || '',
     cidade: initialValues.cidade || '',
     bairro: initialValues.bairro || '',
@@ -34,6 +34,7 @@ const ModalInstalacao = ({ handleClose, onSave, initialValues={} }) => {
     status: initialValues.status || status,
   })
   
+  const today = new Date().toISOString().split("T")[0];
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPedido({
@@ -55,8 +56,7 @@ const ModalInstalacao = ({ handleClose, onSave, initialValues={} }) => {
     handleClose(); // Fecha o modal
   };
   
-  const formattedDate = moment(pedido.data).format('DD/MM/YYYY');
-  const today = new Date().toISOString().split("T")[0];
+
 
   // Prevent body from scrolling when modal is open
   React.useEffect(() => {

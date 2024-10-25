@@ -345,7 +345,9 @@ export default function TableManutencao() {
                     </td>
 
                     <td style={{ textAlign: "center" }}>
-                      <p>{row.nome}</p>
+                    <Typography  level="title-sm"style={{ textAlign: "center"}}>
+                    {row.nome}
+                  </Typography>
                     </td>
                     <td style={{ textAlign: "center" }}>
                       <p>{row.data}</p>

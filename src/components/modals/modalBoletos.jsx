@@ -22,7 +22,7 @@ const ModalBoletos = ({ handleClose, onSave, initialValues = {} }) => {
   const [status, setStatus] = React.useState("Processando")
   const [pedido, setPedido] = React.useState({
     codigo: initialValues.codigo || '',
-    user: initialValues.user || '',
+    user: initialValues.user || 'Lucas',
     nome: initialValues.nome || '',
     data: initialValues.data || dataHoraFormatada,
     motivo: initialValues.motivo || '',

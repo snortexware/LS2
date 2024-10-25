@@ -36,6 +36,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ModalPlano from "../../modals/modalPlano";
 import Stack from "@mui/joy/Stack";
 import MenuOpen from "@mui/icons-material/MenuOpen";
+import Open from "../../assets/open.jpg";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -108,7 +109,6 @@ export default function TablePlano() {
       const newEntry = { ...pedido, id: nextId };
       setRows([...rows, newEntry]);
       setNextId(nextId + 1);
-      
     }
 
     setEditMode(false);
@@ -271,7 +271,7 @@ export default function TablePlano() {
                 <th
                   style={{
                     whiteSpace: "normal",
-                    minWidth: 20,
+                    minWidth: 50,
                     padding: "9px 2px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
@@ -283,7 +283,7 @@ export default function TablePlano() {
                 <th
                   style={{
                     whiteSpace: "normal",
-                    minWidth: 150,
+                    minWidth: 180,
                     padding: "20px 5px",
                     textAlign: "center",
                   }}
@@ -319,7 +319,7 @@ export default function TablePlano() {
 
                 <th
                   style={{
-                    minWidth: 150,
+                    minWidth: 100,
                     padding: "10px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                     lineBreak: "anywhere",
@@ -332,7 +332,7 @@ export default function TablePlano() {
 
                 <th
                   style={{
-                    minWidth: 150,
+                    minWidth: 50,
                     padding: "10px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                     lineBreak: "anywhere",
@@ -345,7 +345,7 @@ export default function TablePlano() {
 
                 <th
                   style={{
-                    minWidth: 130,
+                    minWidth: 100,
                     padding: "20px 6px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
@@ -391,46 +391,57 @@ export default function TablePlano() {
               {[...rows].sort(getComparator(order, "id")).map((row) => (
                 <tr key={row.id}>
                   <td style={{ minWidth: 50, textAlign: "center" }}>
-                    <p><Typography color="success" level="title-md" noWrap>
-                      {row.codigo}
-                    </Typography></p>
+                    <p>
+                      <Typography color="success" level="title-md" noWrap>
+                        {row.codigo}
+                      </Typography>
+                    </p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
-                    <p style={{ fontWeight: 650}}>
+                  <td style={{ textAlign: "center", padding: "20px 10px" }}>
+                    <Typography
+                      
+                      level="title-sm"
+                      
+                    >
                       {row.nome}
-                      </p>
+                    </Typography>
                   </td>
 
                   <td style={{ textAlign: "center" }}>
-                    <div>
-                      <p>{row.planoAntigo}</p>
-                    </div>
+                    <Typography color="neutral" level="title-sm" noWrap>
+                      {row.planoAntigo}
+                    </Typography>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <div>
-                      <p>{row.valorAntigo}</p>
-                    </div>
+                    <Typography color="neutral" level="title-sm" noWrap>
+                      {row.valorAntigo}
+                    </Typography>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <div>
-                      <p>{row.planoNovo}</p>
-                    </div>
+                    <Typography color="neutral" level="title-sm" noWrap>
+                      {row.planoNovo}
+                    </Typography>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <div>
-                      <p>{row.valorNovo}</p>
-                    </div>
+                    <Typography color="neutral" level="title-sm" noWrap>
+                      {row.valorNovo}
+                    </Typography>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    <div>
-                      <p>{row.status}</p>
-                    </div>
+                  <Typography sx={{color:"yellow"}} level="title-sm" noWrap>
+                        {row.status}
+                      </Typography>
                   </td>
 
                   <td style={{ lineBreak: "auto", textAlign: "center" }}>
-                    <div>
-                      <p>{row.user}</p>
-                    </div>
+                    <Box
+                      sx={{ display: "flex", gap: 1.5, alignItems: "center" }}
+                    >
+                      <Avatar src={Open} size="sm" />
+                      <div>
+                        <p>{row.user}</p>
+                      </div>
+                    </Box>
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <div>

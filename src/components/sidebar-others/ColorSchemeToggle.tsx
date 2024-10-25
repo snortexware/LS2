@@ -9,9 +9,16 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
   const { onClick, sx, ...other } = props;
   const { mode, setMode } = useColorScheme();
   const [mounted, setMounted] = React.useState(false);
+
+  // Set the default mode to dark only when the component is first mounted
   React.useEffect(() => {
     setMounted(true);
-  }, []);
+    if (!localStorage.getItem("mode")) {
+      // Only set to dark mode if there's no prior choice saved in localStorage
+      setMode("dark");
+    }
+  }, [setMode]);
+
   if (!mounted) {
     return (
       <IconButton
@@ -24,6 +31,7 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
       />
     );
   }
+
   return (
     <IconButton
       data-screenshot="toggle-mode"
@@ -32,11 +40,10 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
       color="neutral"
       {...other}
       onClick={(event) => {
-        if (mode === "dark") {
-          setMode("light");
-        } else {
-          setMode("dark");
-        }
+        const newMode = mode === "dark" ? "light" : "dark";
+        setMode(newMode);
+        // Save the user's theme preference
+        localStorage.setItem("mode", newMode);
         onClick?.(event);
       }}
       sx={[
@@ -50,7 +57,6 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
       ]}
     >
       <DarkModeRoundedIcon />
-
       <LightModeIcon />
     </IconButton>
   );

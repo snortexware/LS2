@@ -14,7 +14,7 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import Dropdown from "@mui/joy/Dropdown";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -22,7 +22,8 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { motion, AnimatePresence } from "framer-motion";
 import ModalCancelamento from "../../modals/modalCancelamento";
 import Stack from "@mui/joy/Stack";
-
+import Open from "../../assets/open.jpg";
+import Avatar from "@mui/joy/Avatar";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -40,7 +41,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function RowMenu({row, onDelete, onEdit}) {
+function RowMenu({ row, onDelete, onEdit }) {
   return (
     <Dropdown>
       <MenuButton
@@ -52,7 +53,9 @@ function RowMenu({row, onDelete, onEdit}) {
       <Menu size="sm" sx={{ minWidth: 140 }}>
         <MenuItem onClick={() => onEdit(row)}>Editar</MenuItem>
         <Divider />
-        <MenuItem onClick={() => onDelete(row.id)}color="danger">Deletar</MenuItem>
+        <MenuItem onClick={() => onDelete(row.id)} color="danger">
+          Deletar
+        </MenuItem>
       </Menu>
     </Dropdown>
   );
@@ -92,7 +95,6 @@ export default function TableCancelamento() {
       const newEntry = { ...pedido, id: nextId };
       setRows([...rows, newEntry]);
       setNextId(nextId + 1);
-      
     }
 
     setEditMode(false);
@@ -139,33 +141,36 @@ export default function TableCancelamento() {
       </Box>
     </React.Fragment>
   );
-  
+
   return (
     <>
-    <Stack direction={"rows"} sx={{
-    justifyContent: "flex-start",
-    alignItems: "center",
-  }} columnGap={1} spacing={3}>
-
-    
-    <Typography level="h2" component="h1">
-              CLIENTES | 
-              
-            </Typography>
-            <motion.div
-       
-        initial={{ opacity: 0, x: -30 }}
-        whileInView={{
-          opacity: 1,
-          x: 0,
+      <Stack
+        direction={"rows"}
+        sx={{
+          justifyContent: "flex-start",
+          alignItems: "center",
         }}
-        animate={{ opacity: 1, x: 0}}
-        exit={{ opacity: 0, x: 50 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        columnGap={1}
+        spacing={3}
       >
-            <Typography level="h4" color="neutral" >CANCELAMENTO</Typography>
-            </motion.div>
-            </Stack>
+        <Typography level="h2" component="h1">
+          CLIENTES |
+        </Typography>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <Typography level="h4" color="neutral">
+            CANCELAMENTO
+          </Typography>
+        </motion.div>
+      </Stack>
       <Sheet
         className="SearchAndFilters-mobile"
         sx={{ display: { xs: "flex", sm: "none" }, my: 1, gap: 1 }}
@@ -249,50 +254,43 @@ export default function TableCancelamento() {
           >
             <thead>
               <tr>
-              <th
+                <th
                   style={{
                     whiteSpace: "normal",
                     minWidth: 30,
-                    padding: "9px 2px",
+                    padding: "20px 3px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
-                  Codigo
-                  <br></br> 
-                  Cliente
+                  Codigo Cliente
                 </th>
                 <th
                   style={{
                     whiteSpace: "normal",
                     minWidth: 150,
-                    padding: "15px 5px",
-                    textAlign: "center", 
+                    padding: "20px 3px",
+                    textAlign: "center",
                   }}
                 >
                   Nome
                 </th>
-                
-               
-              
-             
-               
+
                 <th
                   style={{
                     minWidth: 200,
-                    padding: "15px 6px",
+                    padding: "20px 3px",
                     textAlign: "center", // Centraliza o texto do cabeçalho
                   }}
                 >
                   Motivo
                 </th>
-              
-                
+
                 <th
-                 style={{
-                  minWidth: 130,
-                  padding: "15px 6px",
-                  textAlign: "center", // Centraliza o texto do cabeçalho
-                }}
+                  style={{
+                    minWidth: 130,
+                    padding: "20px 3px",
+                    textAlign: "center", // Centraliza o texto do cabeçalho
+                  }}
                 >
                   Status
                 </th>
@@ -306,7 +304,7 @@ export default function TableCancelamento() {
                 >
                   Cadastrado
                   <br></br>
-                   Por
+                  Por
                 </th>
                 <th
                   style={{
@@ -318,74 +316,72 @@ export default function TableCancelamento() {
                 >
                   Data/Hora
                   <br></br>
-                    Cadastro	
+                  Cadastro
                 </th>
                 <th
                   style={{
-                    width: 50,
-                    padding: "15px 6px",
+                    width: 80,
+                    padding: "20px 3px",
                     textAlign: "center",
-
                   }}
                 >
                   Ação
                 </th>
-              
               </tr>
-             
             </thead>
             <tbody>
               {[...rows].sort(getComparator(order, "id")).map((row) => (
                 <tr key={row.id}>
-                
-                  
-
-                  <td style={{ minWidth: 90, textAlign: "center" }}>
-                    <p><Typography color="success" level="title-md" noWrap>
-                      {row.codigo}
-                    </Typography></p>
-                  </td>
                   <td style={{ textAlign: "center" }}>
-                    <p>{row.nome}</p>
+                    <Typography color="success" level="title-md" noWrap>
+                      {row.codigo}
+                    </Typography>
                   </td>
-                 
+
+                  <td style={{ textAlign: "center" }}>
+                    <Typography
+                      level="title-sm"
+                      style={{ textAlign: "center" }}
+                    >
+                      {row.nome}
+                    </Typography>
+                  </td>
+
                   <td style={{ textAlign: "center" }}>
                     <div>
                       <p>{row.motivo}</p>
                     </div>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.status}</p>
-                      </div>
-                  
+                  <Typography sx={{color:"yellow"}} level="title-sm" noWrap>
+                        {row.status}
+                      </Typography>
                   </td>
-                  <td style={{ lineBreak: "auto",textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.user}</p>
-                      </div>
-                  
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                                    
-                      <div>
-                        <p>{row.data}</p>
-                      </div>
-                  
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Avatar src={Open} size="sm">
+                        {row.user}
+                      </Avatar>
+                      <p>{row.user}</p>
+                    </Stack>
                   </td>
                   <td style={{ textAlign: "center" }}>
-                    
+                    <div>
+                      <p>{row.data}</p>
+                    </div>
+                  </td>
+                  <td style={{ textAlign: "center" }}>
                     <RowMenu
-                    row={row} 
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}/>
-                    
-                    
-  
+                      row={row}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
                   </td>
-                 
                 </tr>
               ))}
             </tbody>
