@@ -12,45 +12,52 @@ import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
-import { useNavigate } from 'react-router-dom'; // To handle redirection
-import ColorSchemeToggle from '../sidebar-others/ColorSchemeToggle'; // Assuming you have this component
-
+import { useNavigate } from 'react-router-dom'; 
+import ColorSchemeToggle from '../sidebar-others/ColorSchemeToggle'; 
+import Axios from 'axios'; 
 function SignInForm() {
   const { mode } = useColorScheme();
-  const navigate = useNavigate(); // For redirection to home
+  const navigate = useNavigate(); 
 
-  const [email, setEmail] = useState(""); // Store the email input
-  const [password, setPassword] = useState(""); // Store the password input
-  const [error, setError] = useState(""); // Error message state
-  const [logo, setLogo] = useState(""); // Store the logo based on theme
+  const [user, setUser] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [error, setError] = useState(""); 
+  const [logo, setLogo] = useState(""); 
 
   const darkBackground = require('../assets/dark.jpg');
-  const lightBackground = require('../assets/dark.jpg');
+  const lightBackground = require('../assets/light.jpg');
 
-  // Preset login credentials (simulated credentials)
-  const presetEmail = "teste@test.com";
-  const presetPassword = "123456";
-
-  // Automatically update the logo based on the current theme
   useEffect(() => {
     const logoDark = require('../assets/logo.png');
     const logoLight = require('../assets/logo2.png');
     setLogo(mode === 'dark' ? logoDark : logoLight);
   }, [mode]);
 
-  // Handle form submission and simulate login
-  const handleSubmit = (event) => {
-    event.preventDefault();
 
-    // Check credentials
-    if (email === presetEmail && password === presetPassword) {
-      // Simulate login and redirect to home page "/"
-      navigate('/');
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  try {
+    const response = await Axios.post("http://192.168.88.183:8080/api/login", {
+      username: user,
+      password: password,
+    });
+    
+    const token = response.data.jwt;  
+
+    if (token) {
+      localStorage.setItem("token", token); 
+      navigate("/");  
     } else {
-      // Show error if credentials are incorrect
       setError("Invalid email or password");
     }
-  };
+  } catch (error) {
+    console.error("Error authenticating user:", error);
+    setError("Invalid email or password");
+  }
+};
+
+
 
   return (
     <>
@@ -67,7 +74,9 @@ function SignInForm() {
         sx={(theme) => ({
           width: { xs: '100%', md: '50vw' },
           transition: 'width var(--Transition-duration)',
+          transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
           position: 'relative',
+          zIndex: 1,
           display: 'flex',
           justifyContent: 'flex-end',
           backdropFilter: 'blur(12px)',
@@ -100,7 +109,7 @@ function SignInForm() {
             <ColorSchemeToggle />
           </Box>
 
-          {/* Login form */}
+         
           <Box
             component="main"
             sx={{
@@ -139,9 +148,8 @@ function SignInForm() {
                 <FormControl required>
                   <FormLabel>Login</FormLabel>
                   <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={user}
+                    onChange={(e) => setUser(e.target.value)}
                     placeholder="Digite seu email"
                   />
                 </FormControl>
@@ -188,7 +196,7 @@ function SignInForm() {
         </Box>
       </Box>
 
-      {/* Background image box */}
+    
       <Box
         sx={(theme) => ({
           height: '100%',
@@ -204,9 +212,9 @@ function SignInForm() {
             'background-image var(--Transition-duration), left var(--Transition-duration) !important',
           transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
           backgroundRepeat: 'no-repeat',
-          backgroundImage: `url(${darkBackground})`,
+          backgroundImage: `url(${lightBackground})`,
           [theme.getColorSchemeSelector('dark')]: {
-            backgroundImage: `url(${lightBackground})`,
+            backgroundImage: `url(${darkBackground})`,
           },
         })}
       />

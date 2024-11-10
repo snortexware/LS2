@@ -23,6 +23,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
 import { useColorScheme } from "@mui/joy";
+import { useNavigate } from "react-router-dom";
 
 function Toggler({
   defaultExpanded = false,
@@ -64,7 +65,11 @@ export default function Sidebar() {
   const logoWH = require("../assets/logo.png");
   const logoBK = require("../assets/logo2.png");
   const [trocar, setTrocar] = useState(0);
-
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/entrar"); // Redirect to login
+  };
   useEffect(() => {
    
     setLogoTema(mode === "dark" ? 0 : 1);
@@ -307,7 +312,7 @@ export default function Sidebar() {
           }}
         >
           <ListItem sx={{ mt: 0.5 }}>
-            <ListItemButton onClick={() => { alert("Não tem xD (ainda)")}}>
+            <ListItemButton onClick={handleLogout}>
               <SupportRoundedIcon  sx={{ marginRight: 1 }}/>
               Suporte
             </ListItemButton>
